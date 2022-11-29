@@ -1,0 +1,25 @@
+.ingredients-box {
+    max-height: 912px;
+    overflow-y: auto;
+}
+.ingredients-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+.ingredient {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.ingredient-pic {
+    max-width: 240px;
+    max-height: 120px;
+}
+.ingredient-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

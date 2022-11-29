@@ -1,0 +1,26 @@
+.header {
+    background-color: var(--background);
+}
+.content {
+    max-width: 1320px;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+.logo {
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+}
+.link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
