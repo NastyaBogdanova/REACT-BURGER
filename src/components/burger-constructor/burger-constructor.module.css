@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.customScroll {
+    max-height: 464px;
+    overflow-y: auto;
+    padding-left: 28px;
+}
+.total {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.order {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+}
+.item:last-child {
+    margin-bottom: 0;
+}
+.item {
+    position: relative;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+.dropIcon {
+    position: absolute;
+    left: -28px;
+    top: 29px;
+}
+.basket {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+}
