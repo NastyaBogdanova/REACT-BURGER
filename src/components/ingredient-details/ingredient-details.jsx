@@ -1,5 +1,5 @@
 import styles from "./ingredient-details.module.css";
-import ingredientPropTypes from "../utils/types";
+import ingredientPropTypes from "../../utils/types";
 
 const IngredientDetails = ({ content }) => {
     return (

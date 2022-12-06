@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PortalReactDOM from 'react-dom';
 import styles from "./burger-ingredients.module.css";
-import ingredientPropTypes from "../utils/types";
+import ingredientPropTypes from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import withToggleModal from "../hocs/withToggleModal";
@@ -10,22 +9,17 @@ import { CurrencyIcon, Tab, Counter } from '@ya.praktikum/react-developer-burger
 
 const BurgerIngredient = ({ ingredient, count, onClick, isModalOpen }) => {
     return (
-        <>
-            <li className={styles.item} onClick={onClick}>
-                <img className={styles.pic} src={ingredient.image} alt={ingredient.name} />
-                <p className={`${styles.price} text text_type_digits-default pb-1 pt-1`}>{ingredient.price}&nbsp;<CurrencyIcon type="primary" /></p>
-                <h3 className="text text_type_main-default">{ingredient.name}</h3>
-                {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
-            </li>
+        <li className={styles.item} onClick={onClick}>
+            <img className={styles.pic} src={ingredient.image} alt={ingredient.name} />
+            <p className={`${styles.price} text text_type_digits-default pb-1 pt-1`}>{ingredient.price}&nbsp;<CurrencyIcon type="primary" /></p>
+            <h3 className="text text_type_main-default">{ingredient.name}</h3>
+            {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
             {isModalOpen &&
-                PortalReactDOM.createPortal(
-                    <Modal onClose={onClick} title="Детали ингредиента">
-                        <IngredientDetails content={ingredient} />
-                    </Modal>,
-                    document.getElementById("modals")
-                )
+                <Modal onClose={onClick} title="Детали ингредиента">
+                    <IngredientDetails content={ingredient} />
+                </Modal>
             }
-        </>
+        </li>
     )
 }
 
