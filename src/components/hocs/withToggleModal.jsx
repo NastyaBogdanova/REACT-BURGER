@@ -1,8 +1,6 @@
 import React from 'react';
 
-//будет дорабатываться
-
-const withToggleModal = (WrappedComponent) => props => {
+const withToggleModal = (WrappedComponent) => {
     return class extends React.Component {
         constructor(props) {
             super(props);
@@ -14,9 +12,8 @@ const withToggleModal = (WrappedComponent) => props => {
         toggleModalOpen = () => this.setState({ isModalOpen: !this.state.isModalOpen });
 
         render() {
-            //const { toggleModalOpen, isModalOpen } = this.props;
             return (
-                <WrappedComponent {...props}
+                <WrappedComponent {...this.props}
                     onClick={this.toggleModalOpen}
                     isModalOpen={this.state.isModalOpen}
                 />

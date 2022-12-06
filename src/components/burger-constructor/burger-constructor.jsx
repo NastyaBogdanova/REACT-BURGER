@@ -6,16 +6,13 @@ import ingredientPropTypes from "../utils/types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import withToggleModal from "../hocs/withToggleModal";
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Ingredient = ({ ingredient, type }) => {
-    const [isModalOpen, setisModalOpen] = React.useState(false);
-    const toggleModalOpen = () => {
-        setisModalOpen(!isModalOpen);
-    };
+const Ingredient = ({ ingredient, type, onClick, isModalOpen }) => {
     return (
         <>
-            <div className={styles.item} onClick={toggleModalOpen} >
+            <div className={styles.item} onClick={onClick} >
                 {type == "top" &&
                     <ConstructorElement
                         type={type}
@@ -50,7 +47,7 @@ const Ingredient = ({ ingredient, type }) => {
             </div>
             {isModalOpen &&
                 PortalReactDOM.createPortal(
-                    <Modal onClose={toggleModalOpen} title="Детали ингредиента">
+                    <Modal onClose={onClick} title="Детали ингредиента">
                         <IngredientDetails content={ingredient} />
                     </Modal>,
                     document.getElementById("modals")
@@ -60,41 +57,39 @@ const Ingredient = ({ ingredient, type }) => {
     )
 }
 
-const BurgerConstructor = ({ products }) => {
+const WithToggleModalIngredient = withToggleModal(Ingredient);
+
+const BurgerConstructor = ({ products, onClick, isModalOpen }) => {
     function getRandomArrayElement(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
     }
     const randomBun = getRandomArrayElement(products.filter(item => item.type == "bun"));
 
-    const [isModalOpen, setisModalOpen] = React.useState(false);
-    const toggleModalOpen = () => {
-        setisModalOpen(!isModalOpen);
-    };
     return (
         <div className={`${styles.container} mb-10 mt-25`}>
             <div className={styles.basket}>
                 <div className="top mr-4 pl-7">
-                    <Ingredient ingredient={randomBun} type="top" />
+                    <WithToggleModalIngredient ingredient={randomBun} type="top" />
                 </div>
                 <div className={`${styles.customScroll} custom-scroll`}>
                     <div className="pr-1">
                         {products.filter(item => item.type == "main").map(item =>
-                            <Ingredient ingredient={item} type="main" key={item._id} />
+                            <WithToggleModalIngredient ingredient={item} type="main" key={item._id} />
                         )}
                     </div>
                 </div>
                 <div className="bottom mr-4 pl-7">
-                    <Ingredient ingredient={randomBun} type="bottom" />
+                    <WithToggleModalIngredient ingredient={randomBun} type="bottom" />
                 </div>
             </div>
             <div className={`${styles.order} mt-10 mr-5`}>
                 <p className={`${styles.total} text text_type_digits-medium`}>30&nbsp;<CurrencyIcon type="primary" /></p>
-                <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={toggleModalOpen} >
+                <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={onClick} >
                     Оформить заказ
                 </Button>
                 {isModalOpen &&
                     PortalReactDOM.createPortal(
-                        <Modal onClose={toggleModalOpen} title=" ">
+                        <Modal onClose={onClick} title=" ">
                             <OrderDetails />
                         </Modal>,
                         document.getElementById("modals")
@@ -105,12 +100,18 @@ const BurgerConstructor = ({ products }) => {
     );
 }
 
+const WithToggleModalBurgerConstructor = withToggleModal(BurgerConstructor);
+
 BurgerConstructor.propTypes = {
-    products: PropTypes.arrayOf(ingredientPropTypes)
+    products: PropTypes.arrayOf(ingredientPropTypes),
+    onClick: PropTypes.func.isRequired,
+    isModalOpen: PropTypes.bool.isRequired,
 };
 Ingredient.propTypes = {
     ingredient: ingredientPropTypes,
     type: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    isModalOpen: PropTypes.bool.isRequired,
 };
 
-export default BurgerConstructor; 
+export default WithToggleModalBurgerConstructor; 
