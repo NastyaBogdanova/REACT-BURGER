@@ -17,13 +17,11 @@ const App = () => {
         const getIngredients = async () => {
             setState({ ...state, loading: true, hasError: false });
             fetch(api)
-                .then((res) => {
+                .then(res => {
                     if (res.ok) {
-                        return res.json()
-                    } else {
-                        console.log(res.status);
-                        setState({ ...state, loading: false, hasError: true })
+                        return res.json();
                     }
+                    return Promise.reject(`Ошибка ${res.status}`);
                 })
                 .then(data => setState({ ...state, ingredientsData: data.data, loading: false }))
                 .catch(err => {
