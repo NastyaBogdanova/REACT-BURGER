@@ -1,0 +1,30 @@
+.box {
+    max-height: 912px;
+    overflow-y: auto;
+}
+.list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+.item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+.pic {
+    max-width: 240px;
+    max-height: 120px;
+}
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tabs {
+    display: flex;
+}
