@@ -1,72 +1,91 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from "./burger-constructor.module.css";
 import ingredientPropTypes from "../../utils/types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import withToggleModal from "../hocs/withToggleModal";
+import burgerImagePath from '../../images/burger.svg';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Ingredient = ({ ingredient, type }) => {
+const EmptyIngredient = ({ text, type }) => {
     return (
         <div className={styles.item} >
-            {type == "top" &&
-                <ConstructorElement
-                    type={type}
-                    isLocked={true}
-                    text={ingredient.name + " (верх)"}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                />
-            }
-            {type == "bottom" &&
-                <ConstructorElement
-                    type={type}
-                    isLocked={true}
-                    text={ingredient.name + " (низ)"}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                />
-            }
-            {type == "main" &&
-                <div>
-                    <span className={styles.dropIcon}>
-                        <DragIcon type="primary" />
-                    </span>
-                    <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                    >
-                    </ConstructorElement>
-                </div>
-            }
+            <ConstructorElement
+                type={type}
+                text={text}
+                isLocked={true}
+                price="0"
+                thumbnail={burgerImagePath}
+            />
         </div>
     )
 }
 
-const BurgerConstructor = ({ products, onClick, isModalOpen }) => {
-    function getRandomArrayElement(arr) {
-        return arr[Math.floor(Math.random() * arr.length)];
-    }
-    const randomBun = getRandomArrayElement(products.filter(item => item.type == "bun"));
+const BurgerConstructor = ({ onClick, isModalOpen }) => {
+
+    //const dispatch = useDispatch();
+
+    const { bun, main } = useSelector(store => store.constructor);
+
+    //берём массив из контекста
+    //если в контекте уже есть тип бан то больше не добавлять
+    //бан топ == бан баттон
 
     return (
         <div className={`${styles.container} mb-10 mt-25`}>
             <div className={styles.basket}>
-                <div className="top mr-4 pl-7">
-                    <Ingredient ingredient={randomBun} type="top" />
+                <div className={`${styles.item}`}>
+                    {bun ?
+                        <ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={bun.name + " (верх)"}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                        :
+                        <EmptyIngredient type="top" text="Добавьте булку" />
+                    }
                 </div>
                 <div className={`${styles.customScroll} custom-scroll`}>
-                    <div className="pr-1">
-                        {products.filter(item => item.type == "main").map(item =>
-                            <Ingredient ingredient={item} type="main" key={item._id} />
-                        )}
-                    </div>
+                    {main !== undefined ?
+                        <>
+                            {main.filter(item => item.type == "main").map(item =>
+                                <div className={`${styles.item}`}>
+                                    <span className={styles.dropIcon}>
+                                        <DragIcon type="primary" />
+                                    </span>
+                                    <ConstructorElement
+                                        text={item.name}
+                                        price={item.price}
+                                        thumbnail={item.image}
+                                        key={item._id}
+                                    />
+                                </div>
+                            )}
+                        </>
+                        :
+                        <div className={`${styles.item}`}>
+                            <EmptyIngredient text="Добавьте ингредиент" />
+                        </div>
+                    }
                 </div>
-                <div className="bottom mr-4 pl-7">
-                    <Ingredient ingredient={randomBun} type="bottom" />
+                <div className={`${styles.item}`}>
+                    {bun ?
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={bun.name + " (низ)"}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                        :
+                        <EmptyIngredient type="bottom" text="Добавьте булку" />
+                    }
                 </div>
+
             </div>
             <div className={`${styles.order} mt-10 mr-5`}>
                 <p className={`${styles.total} text text_type_digits-medium`}>30&nbsp;<CurrencyIcon type="primary" /></p>
@@ -85,14 +104,14 @@ const BurgerConstructor = ({ products, onClick, isModalOpen }) => {
 
 const WithToggleModalBurgerConstructor = withToggleModal(BurgerConstructor);
 
-BurgerConstructor.propTypes = {
-    products: PropTypes.arrayOf(ingredientPropTypes),
+/*BurgerConstructor.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientPropTypes),
     onClick: PropTypes.func.isRequired,
     isModalOpen: PropTypes.bool.isRequired,
 };
 Ingredient.propTypes = {
     ingredient: ingredientPropTypes,
     type: PropTypes.string.isRequired,
-};
+};*/
 
 export default WithToggleModalBurgerConstructor; 

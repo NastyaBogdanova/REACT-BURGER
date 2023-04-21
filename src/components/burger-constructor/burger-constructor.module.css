@@ -4,9 +4,10 @@
     align-items: flex-end;
 }
 .customScroll {
-    max-height: 464px;
+    max-height: 448px;
     overflow-y: auto;
     padding-left: 28px;
+    width: 100%;
 }
 .total {
     display: flex;
@@ -24,8 +25,9 @@
 }
 .item {
     position: relative;
-    margin-bottom: 16px;
-    cursor: pointer;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    width: 100%;
 }
 .dropIcon {
     position: absolute;
@@ -35,6 +37,7 @@
 .basket {
     display: flex;
     flex-direction: column;
-    gap: 16px;
     align-items: flex-end;
+    max-width: 536px;
+    width: 100%;
 }
