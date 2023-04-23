@@ -41,3 +41,7 @@
     max-width: 536px;
     width: 100%;
 }
+.error {
+    color: red;
+    text-align: center;
+}

@@ -9,7 +9,7 @@ export function getIngridients() {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         })
-        fetch(api)
+        fetch(`${api}/ingredients`)
             .then(res => {
                 if (res.ok) {
                     return res.json();

@@ -1,8 +1,8 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN } from "../actions/constructor";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN, UPDATE_INGREDIENTS, RESET_INGREDIENTS } from "../actions/constructor";
 
 const initialState = {
+    stuffings: [],
     bun: null,
-    main: [],
 }
 
 export const constructorReducer = (state = initialState, action) => {
@@ -16,15 +16,29 @@ export const constructorReducer = (state = initialState, action) => {
         case ADD_INGREDIENT: {
             return {
                 ...state,
-                stuffing: [
-                    ...state.main,
-                    ...[action.main]
-                ],
-            };
+                stuffings: [
+                    ...(state.stuffings || []),
+                    //...state.stuffings,
+                    action.payload
+                ]
+            }
         }
+        case UPDATE_INGREDIENTS:
+            return {
+                ...state,
+                stuffings: action.ingredients
+            }
         case DELETE_INGREDIENT: {
             return {
                 ...state,
+                stuffings: [...state.stuffings.filter(item => item.id !== action.id)]
+            };
+        }
+        case RESET_INGREDIENTS: {
+            return {
+                ...state,
+                stuffings: [],
+                bun: null
             };
         }
         default: {

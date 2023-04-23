@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 import styles from "./burger-constructor.module.css";
 import ingredientPropTypes from "../../utils/types";
@@ -7,9 +8,13 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import withToggleModal from "../hocs/withToggleModal";
 import burgerImagePath from '../../images/burger.svg';
+import { addIngredient, addBun, updateIngredients, deleteIngredient, resetIngredients } from '../../services/actions/constructor';
+import { sendOrder } from '../../services/actions/order';
+import { useDrop } from 'react-dnd';
+import { DraggableElement } from './draggableElement/draggable-element';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const EmptyIngredient = ({ text, type }) => {
+const EmptyElement = ({ text, type }) => {
     return (
         <div className={styles.item} >
             <ConstructorElement
@@ -23,19 +28,74 @@ const EmptyIngredient = ({ text, type }) => {
     )
 }
 
-const BurgerConstructor = ({ onClick, isModalOpen }) => {
+const BurgerConstructor = () => {
 
-    //const dispatch = useDispatch();
+    const [isModalOpen, setModalOpen] = React.useState(false);
 
-    const { bun, main } = useSelector(store => store.constructor);
+    const dispatch = useDispatch();
 
-    //берём массив из контекста
-    //если в контекте уже есть тип бан то больше не добавлять
-    //бан топ == бан баттон
+    const { bun, stuffings } = useSelector(store => store.constructor);
+
+    const handleDrop = useCallback((item) => {
+        if (item.type === "bun") {
+            dispatch(addBun(item));
+        } else {
+            dispatch(addIngredient(item));
+        }
+
+    }, [dispatch]);
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(item) {
+            handleDrop(item);
+        }
+    });
+
+    const moveElement = useCallback((dragIndex, hoverIndex) => {
+        const updatedElements = update(stuffings, {
+            $splice: [
+                [dragIndex, 1],
+                [hoverIndex, 0, stuffings[dragIndex]],
+            ],
+        })
+        dispatch(updateIngredients(updatedElements));
+    }, [stuffings, dispatch])
+
+    const totalPrice = useMemo(() => {
+        if (stuffings || bun) {
+            return (stuffings ? stuffings.reduce((sum, item) => sum + item.price, 0) : 0) + (bun ? bun.price * 2 : 0);
+        } else {
+            return 0;
+        }
+    }, [bun, stuffings]);
+
+    const deleteElement = (id) => {
+        dispatch(deleteIngredient(id));
+
+    }
+
+    const orderModalOpen = () => {
+        setModalOpen(true);
+    };
+
+    const orderModalClose = () => {
+        setModalOpen(false);
+        dispatch(resetIngredients());
+
+    };
+
+    const submit = () => {
+        const ingredientsId = [bun, ...stuffings, bun].map(item => item._id);
+        console.log(ingredientsId);
+        dispatch(sendOrder(ingredientsId, orderModalOpen));
+    }
+
+    const { failed } = useSelector(store => store.order);
 
     return (
         <div className={`${styles.container} mb-10 mt-25`}>
-            <div className={styles.basket}>
+            <div className={styles.basket} ref={dropTarget}>
                 <div className={`${styles.item}`}>
                     {bun ?
                         <ConstructorElement
@@ -46,29 +106,19 @@ const BurgerConstructor = ({ onClick, isModalOpen }) => {
                             thumbnail={bun.image}
                         />
                         :
-                        <EmptyIngredient type="top" text="Добавьте булку" />
+                        <EmptyElement type="top" text="Добавьте булку" />
                     }
                 </div>
                 <div className={`${styles.customScroll} custom-scroll`}>
-                    {main !== undefined ?
+                    {stuffings !== undefined && stuffings.length !== 0 ?
                         <>
-                            {main.filter(item => item.type == "main").map(item =>
-                                <div className={`${styles.item}`}>
-                                    <span className={styles.dropIcon}>
-                                        <DragIcon type="primary" />
-                                    </span>
-                                    <ConstructorElement
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
-                                        key={item._id}
-                                    />
-                                </div>
+                            {stuffings.map((item, index) =>
+                                <DraggableElement key={item.id} elem={item} index={index} moveElement={moveElement} deleteElement={deleteElement} />
                             )}
                         </>
                         :
                         <div className={`${styles.item}`}>
-                            <EmptyIngredient text="Добавьте ингредиент" />
+                            <EmptyElement text="Добавьте ингредиент" />
                         </div>
                     }
                 </div>
@@ -82,27 +132,32 @@ const BurgerConstructor = ({ onClick, isModalOpen }) => {
                             thumbnail={bun.image}
                         />
                         :
-                        <EmptyIngredient type="bottom" text="Добавьте булку" />
+                        <EmptyElement type="bottom" text="Добавьте булку" />
                     }
                 </div>
 
             </div>
-            <div className={`${styles.order} mt-10 mr-5`}>
-                <p className={`${styles.total} text text_type_digits-medium`}>30&nbsp;<CurrencyIcon type="primary" /></p>
-                <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={onClick} >
-                    Оформить заказ
-                </Button>
-                {isModalOpen &&
-                    <Modal onClose={onClick} title=" ">
-                        <OrderDetails />
-                    </Modal>
+            <div >
+                <div className={`${styles.order} mt-10 mr-5`}>
+                    <p className={`${styles.total} text text_type_digits-medium`}>{totalPrice}&nbsp;<CurrencyIcon type="primary" /></p>
+                    <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={submit} disabled={!stuffings || !stuffings.length || !bun}>
+                        Оформить заказ
+                    </Button>
+                    {isModalOpen &&
+                        <Modal onClose={orderModalClose} title=" ">
+                            <OrderDetails />
+                        </Modal>
+                    }
+                </div>
+                {failed &&
+                    <span className={`${styles.error} text text_type_main-small`}>Произошла ошибка при формировании заказа!</span>
                 }
             </div>
         </div>
     );
 }
 
-const WithToggleModalBurgerConstructor = withToggleModal(BurgerConstructor);
+//const WithToggleModalBurgerConstructor = withToggleModal(BurgerConstructor);
 
 /*BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropTypes),
@@ -114,4 +169,4 @@ Ingredient.propTypes = {
     type: PropTypes.string.isRequired,
 };*/
 
-export default WithToggleModalBurgerConstructor; 
+export default BurgerConstructor; 

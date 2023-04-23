@@ -5,6 +5,8 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngridients } from '../../services/actions/ingredients';
 import WithToggleModalBurgerConstructor from "../burger-constructor/burger-constructor";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const App = () => {
 
@@ -19,20 +21,22 @@ const App = () => {
     return (
         <div className={styles.app}>
             <AppHeader />
-            <main className={styles.main}>
-                <div>
-                    {failed &&
-                        <h1 className="text text_type_main-large m-25">Произошла ошибка при загрузке ингридиентов!</h1>
-                    }
-                    {request &&
-                        <h1 className="text text_type_main-large m-25">Идёт загрузка ингридиентов...</h1>
-                    }
-                    {ingredients !== undefined &&
-                        <BurgerIngredients ingredients={ingredients} />
-                    }
-                </div>
-                <WithToggleModalBurgerConstructor />
-            </main>
+            <DndProvider backend={HTML5Backend}>
+                <main className={styles.main}>
+                    <div>
+                        {failed &&
+                            <h1 className="text text_type_main-large m-25">Произошла ошибка при загрузке ингридиентов!</h1>
+                        }
+                        {request &&
+                            <h1 className="text text_type_main-large m-25">Идёт загрузка ингридиентов...</h1>
+                        }
+                        {ingredients !== undefined &&
+                            <BurgerIngredients ingredients={ingredients} />
+                        }
+                    </div>
+                    <WithToggleModalBurgerConstructor />
+                </main>
+            </DndProvider>
         </div>
     )
 }
