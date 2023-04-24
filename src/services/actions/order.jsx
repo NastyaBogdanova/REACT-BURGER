@@ -1,4 +1,4 @@
-import api from "../../utils/constants";
+import { fetchOrder } from "../../utils/api";
 
 export const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
@@ -9,30 +9,23 @@ export function sendOrder(ingredients, orderModalOpen) {
         dispatch({
             type: SEND_ORDER_REQUEST
         })
-        fetch(`${api}/orders`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ ingredients })
-        })
+
+        fetchOrder(ingredients)
             .then(res => {
-                if (res.ok) {
-                    return res.json();
+                if (res) {
+                    dispatch({
+                        type: SEND_ORDER_SUCCESS,
+                        order: res.order
+                    })
                 } else {
                     dispatch({
                         type: SEND_ORDER_FAILED
                     })
                 }
             })
-            .then(data => {
-                dispatch({
-                    type: SEND_ORDER_SUCCESS,
-                    order: data.order
-                })
-            })
             .then(() => orderModalOpen())
             .catch(err => {
+                console.log(err);
                 dispatch({
                     type: SEND_ORDER_FAILED
                 })

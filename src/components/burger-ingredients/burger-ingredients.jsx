@@ -1,17 +1,20 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from "./burger-ingredients.module.css";
 import ingredientPropTypes from "../../utils/types";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
+import { useSelector } from 'react-redux';
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
     const [current, setCurrent] = React.useState('Булки');
 
     const [bunRef, inViewBuns] = useInView({ threshold: 0 });
     const [mainRef, inViewMains] = useInView({ threshold: 0 });
     const [sauceRef, inViewSauces] = useInView({ threshold: 0 });
+
+    const { ingredients } = useSelector(store => store.ingredients);
 
     useEffect(() => {
         if (inViewBuns) {
@@ -66,9 +69,5 @@ const BurgerIngredients = ({ ingredients }) => {
         </div>
     );
 }
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropTypes)
-};
 
 export default BurgerIngredients; 

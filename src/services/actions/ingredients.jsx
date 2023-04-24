@@ -1,4 +1,4 @@
-import api from "../../utils/constants";
+import { fetchIngredients } from "../../utils/api";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
@@ -9,25 +9,25 @@ export function getIngridients() {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         })
-        fetch(`${api}/ingredients`)
+
+        fetchIngredients()
             .then(res => {
-                if (res.ok) {
-                    return res.json();
+                if (res) {
+                    dispatch({
+                        type: GET_INGREDIENTS_SUCCESS,
+                        ingredients: res
+                    })
                 } else {
                     dispatch({
                         type: GET_INGREDIENTS_FAILED
                     })
                 }
             })
-            .then(data => {
-                dispatch({
-                    type: GET_INGREDIENTS_SUCCESS,
-                    ingredients: data.data
-                })
-            }).catch(err => {
+            .catch((err) => {
+                console.log(err);
                 dispatch({
                     type: GET_INGREDIENTS_FAILED
                 })
-            })
+            });
     }
 } 
