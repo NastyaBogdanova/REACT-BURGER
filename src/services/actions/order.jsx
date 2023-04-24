@@ -1,6 +1,3 @@
-//объект созданного заказа
-//Получение и обновление номера заказа в модальном окне OrderDetails.
-
 import api from "../../utils/constants";
 
 export const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';

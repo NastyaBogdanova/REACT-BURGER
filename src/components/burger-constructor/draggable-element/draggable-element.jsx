@@ -1,7 +1,9 @@
 import { useRef } from 'react'
+import PropTypes from 'prop-types'
+import ingredientPropTypes from "../../../utils/types"
 import { useDrag, useDrop } from 'react-dnd'
 import styles from "../burger-constructor.module.css"
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 export const DraggableElement = ({ elem, index, moveElement, deleteElement }) => {
     const id = elem.id;
@@ -64,5 +66,12 @@ export const DraggableElement = ({ elem, index, moveElement, deleteElement }) =>
 
     )
 }
+
+DraggableElement.propTypes = {
+    elem: ingredientPropTypes.isRequired,
+    index: PropTypes.number.isRequired,
+    moveElement: PropTypes.func.isRequired,
+    deleteElement: PropTypes.func.isRequired
+};
 
 export default DraggableElement;

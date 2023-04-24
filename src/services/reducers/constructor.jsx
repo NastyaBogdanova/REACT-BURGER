@@ -18,7 +18,7 @@ export const constructorReducer = (state = initialState, action) => {
                 ...state,
                 stuffings: [
                     ...(state.stuffings || []),
-                    //...state.stuffings,
+                    //...state.stuffings, это должно работать, но почему-то не работает
                     action.payload
                 ]
             }

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import { useSelector, useDispatch } from 'react-redux';
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { getIngridients } from '../../services/actions/ingredients';
-import WithToggleModalBurgerConstructor from "../burger-constructor/burger-constructor";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 const App = () => {
 
@@ -34,7 +34,7 @@ const App = () => {
                             <BurgerIngredients ingredients={ingredients} />
                         }
                     </div>
-                    <WithToggleModalBurgerConstructor />
+                    <BurgerConstructor />
                 </main>
             </DndProvider>
         </div>
