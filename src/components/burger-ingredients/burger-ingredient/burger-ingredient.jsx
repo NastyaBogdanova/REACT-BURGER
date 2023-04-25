@@ -29,19 +29,15 @@ const BurgerIngredient = ({ ingredient }) => {
         item: ingredient
     });
 
-    const toggleModalOpen = () => {
-        setModalOpen(!isModalOpen);
-    };
-
-    const handleOpenModal = useCallback(() => {
+    const handleOpenModal = () => {
         dispatch(addIngredientToModal(ingredient));
-        toggleModalOpen();
-    }, [dispatch, ingredient, isModalOpen]);
+        setModalOpen(true);
+    }
 
-    const handleCloseModal = useCallback(() => {
-        toggleModalOpen();
+    const handleCloseModal = () => {
+        setModalOpen(false);
         dispatch(deleteIngredientFromModlal());
-    }, [dispatch, isModalOpen]);
+    }
 
     const counter = () => {
         return ingredients.filter(item => item?._id === ingredient._id).length;
@@ -50,17 +46,20 @@ const BurgerIngredient = ({ ingredient }) => {
     const count = counter();
 
     return (
-        <li className={styles.item} onClick={handleOpenModal} ref={dragRef}>
-            <img className={styles.pic} src={ingredient.image} alt={ingredient.name} />
-            <p className={`${styles.price} text text_type_digits-default pb-1 pt-1`}>{ingredient.price}&nbsp;<CurrencyIcon type="primary" /></p>
-            <h3 className="text text_type_main-default">{ingredient.name}</h3>
-            {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
+        <>
+            <li className={styles.item} onClick={handleOpenModal} ref={dragRef}>
+                <img className={styles.pic} src={ingredient.image} alt={ingredient.name} />
+                <p className={`${styles.price} text text_type_digits-default pb-1 pt-1`}>{ingredient.price}&nbsp;<CurrencyIcon type="primary" /></p>
+                <h3 className="text text_type_main-default">{ingredient.name}</h3>
+                {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
+            </li>
             {isModalOpen &&
                 <Modal onClose={handleCloseModal} title="Детали ингредиента">
                     <IngredientDetails />
                 </Modal>
             }
-        </li>
+        </>
+
     )
 }
 

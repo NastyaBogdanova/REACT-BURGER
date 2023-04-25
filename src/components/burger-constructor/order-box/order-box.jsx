@@ -32,7 +32,6 @@ const OrderBox = () => {
     const orderModalClose = () => {
         setModalOpen(false);
         dispatch(resetIngredients());
-
     };
 
     const submit = () => {
