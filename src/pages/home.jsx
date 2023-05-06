@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from "./app.module.css";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { getIngridients } from '../../services/actions/ingredients';
+import styles from "./home.module.css";
+import AppHeader from "../components/app-header/app-header";
+import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../components/burger-constructor/burger-constructor";
+import { getIngridients } from '../services/actions/ingredients';
 
-const App = () => {
+export function HomePage() {
 
     const { ingredients, request, failed } = useSelector(store => store.ingredients);
 
@@ -40,5 +40,3 @@ const App = () => {
         </div>
     )
 }
-
-export default App;
