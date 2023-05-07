@@ -1,29 +1,38 @@
 import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom'
 import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { forgotPassword } from '../services/actions/password';
 
 export function ForgotPasswordPage() {
+    const { forgotPasswordFailed } = useSelector(store => store.password);
     const [mail, setMail] = React.useState("");
+    const dispatch = useDispatch();
+
+    const submit = async (e) => {
+        e.preventDefault();
+        await dispatch(forgotPassword(mail));
+    };
 
     return (
         <div className={styles.background}>
             <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
-                <form className={styles.form}>
-                    <Input
-                        type={'email'}
-                        placeholder={'E-mail'}
+                <form className={styles.form} onSubmit={submit}>
+                    <EmailInput
                         onChange={e => setMail(e.target.value)}
                         value={mail}
                         name={'email'}
-                        error={false}
-                        errorText={'Ошибка'}
-                        extraClass="mb-6"
+                        errorText={'Введите e-mail в формате example@mail.com'}
+                        required
                     />
-                    <Button htmlType="button" type="primary" size="medium">
+                    {forgotPasswordFailed &&
+                        <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка, попробуйте ещё раз.</span>
+                    }
+                    <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">
                         Восстановить
                     </Button>
                 </form>

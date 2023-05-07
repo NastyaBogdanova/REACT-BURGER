@@ -1,0 +1,28 @@
+.background {
+    background-color: var(--background-alt);
+}
+.main {
+    max-width: 1320px;
+    margin: 120px auto;
+    width: 100%;
+}
+.box {
+    display: flex;
+}
+.nav {
+    display: flex;
+    flex-direction: column;
+    max-width: 330px;
+    margin-right: 60px;
+}
+.button {
+    line-height: 64px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+}
+.error {
+    color: red;
+}

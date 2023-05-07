@@ -5,6 +5,7 @@ import { LoginPage } from './pages/login';
 import { ForgotPasswordPage } from './pages/forgot-password';
 import { ResetPasswordPage } from './pages/reset-password';
 import { NotFound } from './pages/not-found';
+import { ProfilePage } from './pages/profile';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/not-found404" element={<NotFound />} />
+                <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </BrowserRouter>
     )

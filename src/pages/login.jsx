@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';

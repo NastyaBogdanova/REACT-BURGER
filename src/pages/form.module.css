@@ -22,3 +22,6 @@
 .link:hover {
     color: #FFFF;
 }
+.error {
+    color: red;
+}

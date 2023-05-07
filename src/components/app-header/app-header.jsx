@@ -1,4 +1,5 @@
 import styles from "./app-header.module.css";
+import { Link } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const AppHeader = () => {
@@ -6,10 +7,10 @@ const AppHeader = () => {
         <header className={`${styles.header} p-4`}>
             <div className={styles.content}>
                 <nav className={styles.nav}>
-                    <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
+                    <Link to={`/`} className={`${styles.link} text text_type_main-default text_color_primary pr-5 pb-4 pt-4`}>
                         <BurgerIcon type="primary" />
                         Конструктор
-                    </a>
+                    </Link>
                     <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
                         <ListIcon type="secondary" />
                         Лента заказов
@@ -18,10 +19,10 @@ const AppHeader = () => {
                 <div className={styles.logo}>
                     <Logo />
                 </div>
-                <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
+                <Link to={`/profile`} className={`${styles.link} text text_type_main-default text_color_primary pl-5 pb-4 pt-4`}>
                     <ProfileIcon type="secondary" />
                     Личный кабинет
-                </a>
+                </Link>
             </div>
         </header>
     );
