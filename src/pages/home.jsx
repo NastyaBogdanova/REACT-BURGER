@@ -16,7 +16,7 @@ export function HomePage() {
 
     useEffect(() => {
         dispatch(getIngridients())
-    }, [])
+    }, []);
 
     return (
         <div className={styles.app}>
