@@ -20,17 +20,27 @@
     flex-direction: column;
 }
 .button {
-    line-height: 64px;
+    text-decoration: none;
+    line-height: 64px !important;
     cursor: pointer;
 }
 .button:hover {
-    color: white;
+    color: #F2F2F3;
 }
 .info {
     display: flex;
     flex-direction: column;
     max-width: 480px;
 }
+.buttons {
+    display: flex;
+    justify-content: right;
+}
 .error {
     color: red;
+    text-align: center;
+}
+.success {
+    color: #F2F2F3;
+    text-align: center;
 }

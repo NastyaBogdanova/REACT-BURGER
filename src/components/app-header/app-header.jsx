@@ -1,5 +1,5 @@
 import styles from "./app-header.module.css";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const AppHeader = () => {
@@ -7,22 +7,22 @@ const AppHeader = () => {
         <header className={`${styles.header} p-4`}>
             <div className={styles.content}>
                 <nav className={styles.nav}>
-                    <Link to={`/`} className={`${styles.link} text text_type_main-default text_color_primary pr-5 pb-4 pt-4`}>
-                        <BurgerIcon type="primary" />
+                    <NavLink to={`/`} className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pr-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pr-5 pb-4 pt-4`)}>
+                        <BurgerIcon type="secondary" />
                         Конструктор
-                    </Link>
-                    <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
+                    </NavLink>
+                    <NavLink to='/profile/orders' className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pl-5 pr-5 pb-4 pt-4`)}>
                         <ListIcon type="secondary" />
                         Лента заказов
-                    </a>
+                    </NavLink>
                 </nav>
                 <div className={styles.logo}>
                     <Logo />
                 </div>
-                <Link to={`/profile`} className={`${styles.link} text text_type_main-default text_color_primary pl-5 pb-4 pt-4`}>
+                <NavLink to={`/profile`} className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pl-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pl-5 pb-4 pt-4`)}>
                     <ProfileIcon type="secondary" />
                     Личный кабинет
-                </Link>
+                </NavLink>
             </div>
         </header>
     );

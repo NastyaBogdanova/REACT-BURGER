@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
@@ -12,6 +12,8 @@ export function LoginPage() {
     const [mail, setMail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
+    const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
 
     const submit = async (e) => {
@@ -20,11 +22,11 @@ export function LoginPage() {
     };
 
     if (loggedIn) {
-        return (
-            <Navigate
-                to={'/'}
-            />
-        );
+        if (location.state?.from) {
+            navigate(location.state?.from);
+        } else {
+            navigate('/');
+        }
     }
 
     return (

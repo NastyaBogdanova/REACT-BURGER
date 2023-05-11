@@ -1,25 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { resetPassword } from '../services/actions/password';
 
 export function ResetPasswordPage() {
+    const { resetPasswordFailed, resetPasswordSuccess } = useSelector(store => store.password);
+
     const [password, setPassword] = React.useState("");
     const [code, setCode] = React.useState("");
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const submit = async (e) => {
+        e.preventDefault();
+        await dispatch(resetPassword(password, code));
+        setPassword("");
+        setCode("");
+    };
+
+    useEffect(() => {
+        if (!location.state?.fromForgotPassword) {
+            navigate('/forgot-password');
+        }
+    }, []);
 
     return (
         <div className={styles.background}>
             <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={submit}>
                     <PasswordInput
                         onChange={e => setPassword(e.target.value)}
                         value={password}
                         placeholder={'Введите новый пароль'}
                         name={'password'}
                         extraClass="mb-6"
+                        required
                     />
                     <Input
                         type={'text'}
@@ -29,9 +51,15 @@ export function ResetPasswordPage() {
                         name={'code'}
                         error={false}
                         errorText={'Ошибка'}
-                        extraClass="mb-6"
+                        required
                     />
-                    <Button htmlType="button" type="primary" size="medium">
+                    {resetPasswordFailed &&
+                        <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка, попробуйте ещё раз.</span>
+                    }
+                    {resetPasswordSuccess &&
+                        <span className={`${styles.success} text text_type_main-small mt-2`}>Пароль успешно изменён.</span>
+                    }
+                    <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">
                         Сохранить
                     </Button>
                 </form>

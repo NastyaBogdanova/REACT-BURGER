@@ -1,20 +1,27 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from '../services/actions/password';
 
 export function ForgotPasswordPage() {
-    const { forgotPasswordFailed } = useSelector(store => store.password);
+    const { forgotPasswordFailed, forgotPasswordSuccess } = useSelector(store => store.password);
+
     const [mail, setMail] = React.useState("");
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault();
         await dispatch(forgotPassword(mail));
     };
+
+    if (forgotPasswordSuccess) {
+        navigate('/reset-password', { state: { fromForgotPassword: true } });
+    }
 
     return (
         <div className={styles.background}>

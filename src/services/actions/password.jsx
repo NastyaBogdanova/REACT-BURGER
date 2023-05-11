@@ -43,3 +43,41 @@ export function forgotPassword(email) {
             })
     }
 }
+
+export function resetPassword(password, code) {
+    const options = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "password": password,
+            "token": code
+        })
+    }
+    return function (dispatch) {
+        dispatch({
+            type: RESET_PASSWORD_REQUEST
+        })
+
+        request('password-reset/reset', options)
+            .then(res => {
+                console.log(res);
+                if (res.success) {
+                    dispatch({
+                        type: RESET_PASSWORD_SUCCESS
+                    })
+                } else {
+                    dispatch({
+                        type: RESET_PASSWORD_FAILED
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch({
+                    type: RESET_PASSWORD_FAILED
+                })
+            })
+    }
+}
