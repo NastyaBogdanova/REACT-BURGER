@@ -6,16 +6,19 @@ import OrderDetails from "../../order-details/order-details";
 import { resetIngredients } from '../../../services/actions/constructor';
 import { sendOrder } from '../../../services/actions/order';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useNavigate } from 'react-router-dom';
 
 const OrderBox = () => {
 
     const [isModalOpen, setModalOpen] = React.useState(false);
 
     const { bun, stuffings } = useSelector(store => store.constructor);
+    const { loggedIn } = useSelector(store => store.user);
 
     const { failed } = useSelector(store => store.order);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const totalPrice = useMemo(() => {
         if (stuffings || bun) {
@@ -35,8 +38,12 @@ const OrderBox = () => {
     };
 
     const submit = () => {
-        const ingredientsId = [bun, ...stuffings, bun].map(item => item._id);
-        dispatch(sendOrder(ingredientsId, orderModalOpen));
+        if (loggedIn) {
+            const ingredientsId = [bun, ...stuffings, bun].map(item => item._id);
+            dispatch(sendOrder(ingredientsId, orderModalOpen));
+        } else {
+            navigate("/login");
+        }
     }
 
     return (

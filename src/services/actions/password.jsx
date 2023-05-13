@@ -62,7 +62,6 @@ export function resetPassword(password, code) {
 
         request('password-reset/reset', options)
             .then(res => {
-                console.log(res);
                 if (res.success) {
                     dispatch({
                         type: RESET_PASSWORD_SUCCESS

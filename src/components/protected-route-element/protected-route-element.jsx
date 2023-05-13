@@ -2,6 +2,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from '../../services/actions/user';
+import PropTypes from 'prop-types';
 
 export function ProtectedRouteElement({ element, onlyForUnauth }) {
     const dispatch = useDispatch();
@@ -24,4 +25,9 @@ export function ProtectedRouteElement({ element, onlyForUnauth }) {
     }
 
     return element;
-} 
+}
+
+ProtectedRouteElement.propTypes = {
+    element: PropTypes.element.isRequired,
+    onlyForUnauth: PropTypes.bool
+};

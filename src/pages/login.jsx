@@ -44,11 +44,13 @@ export function LoginPage() {
                         error={false}
                         errorText={'Ошибка'}
                         extraClass="mb-6"
+                        required
                     />
                     <PasswordInput
                         onChange={e => setPassword(e.target.value)}
                         value={password}
                         name={'password'}
+                        required
                     />
                     {loginFailed &&
                         <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка, попробуйте ещё раз.</span>

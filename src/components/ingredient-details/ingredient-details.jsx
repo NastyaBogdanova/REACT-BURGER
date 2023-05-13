@@ -1,9 +1,20 @@
 import styles from "./ingredient-details.module.css";
-import { useSelector } from 'react-redux';
+import { useParams, useLocation } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
+    const { ingredients, request, failed } = useSelector(store => store.ingredients);
+    const { id } = useParams();
 
-    const { ingredient } = useSelector(store => store.modal);
+    if (ingredients === undefined && request) {
+        return <h1 className="text text_type_main-large m-25">Идёт загрузка ингридиента...</h1>
+    } else if (ingredients === undefined && failed) {
+        return <h1 className="text text_type_main-large m-25">Произошла ошибка при загрузке ингридиента!</h1>
+    } else if (ingredients === undefined) {
+        return <h1 className="text text_type_main-large m-25">Что-то пошло не так</h1>
+    }
+
+    const ingredient = ingredients.find((item) => item._id === id);
 
     return (
         <div className={styles.container}>
