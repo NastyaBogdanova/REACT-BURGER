@@ -1,98 +1,97 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import update from 'immutability-helper';
 import styles from "./burger-constructor.module.css";
-import ingredientPropTypes from "../../utils/types";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
-import withToggleModal from "../hocs/withToggleModal";
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { addIngredient, addBun, updateIngredients, deleteIngredient } from '../../services/actions/constructor';
+import { useDrop } from 'react-dnd';
+import { DraggableElement } from './draggable-element/draggable-element';
+import OrderBox from './order-box/order-box';
+import EmptyElement from './empty-element/empty-element';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Ingredient = ({ ingredient, type }) => {
-    return (
-        <div className={styles.item} >
-            {type == "top" &&
-                <ConstructorElement
-                    type={type}
-                    isLocked={true}
-                    text={ingredient.name + " (верх)"}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                />
-            }
-            {type == "bottom" &&
-                <ConstructorElement
-                    type={type}
-                    isLocked={true}
-                    text={ingredient.name + " (низ)"}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                />
-            }
-            {type == "main" &&
-                <div>
-                    <span className={styles.dropIcon}>
-                        <DragIcon type="primary" />
-                    </span>
-                    <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                    >
-                    </ConstructorElement>
-                </div>
-            }
-        </div>
-    )
-}
+const BurgerConstructor = () => {
 
-const BurgerConstructor = ({ products, onClick, isModalOpen }) => {
-    function getRandomArrayElement(arr) {
-        return arr[Math.floor(Math.random() * arr.length)];
+    const dispatch = useDispatch();
+
+    const { bun, stuffings } = useSelector(store => store.constructor);
+
+    const handleDrop = useCallback((item) => {
+        if (item.type === "bun") {
+            dispatch(addBun(item));
+        } else {
+            dispatch(addIngredient(item));
+        }
+
+    }, [dispatch]);
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(item) {
+            handleDrop(item);
+        }
+    });
+
+    const moveElement = useCallback((dragIndex, hoverIndex) => {
+        const updatedElements = update(stuffings, {
+            $splice: [
+                [dragIndex, 1],
+                [hoverIndex, 0, stuffings[dragIndex]],
+            ],
+        })
+        dispatch(updateIngredients(updatedElements));
+    }, [stuffings, dispatch])
+
+    const deleteElement = (id) => {
+        dispatch(deleteIngredient(id));
+
     }
-    const randomBun = getRandomArrayElement(products.filter(item => item.type == "bun"));
 
     return (
         <div className={`${styles.container} mb-10 mt-25`}>
-            <div className={styles.basket}>
-                <div className="top mr-4 pl-7">
-                    <Ingredient ingredient={randomBun} type="top" />
+            <div className={styles.basket} ref={dropTarget}>
+                <div className={`${styles.item}`}>
+                    {bun ?
+                        <ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={bun.name + " (верх)"}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                        :
+                        <EmptyElement type="top" text="Добавьте булку" />
+                    }
                 </div>
                 <div className={`${styles.customScroll} custom-scroll`}>
-                    <div className="pr-1">
-                        {products.filter(item => item.type == "main").map(item =>
-                            <Ingredient ingredient={item} type="main" key={item._id} />
-                        )}
-                    </div>
+                    {stuffings !== undefined && stuffings.length !== 0 ?
+                        <>
+                            {stuffings.map((item, index) =>
+                                <DraggableElement key={item.id} elem={item} index={index} moveElement={moveElement} deleteElement={deleteElement} />
+                            )}
+                        </>
+                        :
+                        <div className={`${styles.item}`}>
+                            <EmptyElement text="Добавьте ингредиент" />
+                        </div>
+                    }
                 </div>
-                <div className="bottom mr-4 pl-7">
-                    <Ingredient ingredient={randomBun} type="bottom" />
+                <div className={`${styles.item}`}>
+                    {bun ?
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={bun.name + " (низ)"}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                        :
+                        <EmptyElement type="bottom" text="Добавьте булку" />
+                    }
                 </div>
             </div>
-            <div className={`${styles.order} mt-10 mr-5`}>
-                <p className={`${styles.total} text text_type_digits-medium`}>30&nbsp;<CurrencyIcon type="primary" /></p>
-                <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={onClick} >
-                    Оформить заказ
-                </Button>
-                {isModalOpen &&
-                    <Modal onClose={onClick} title=" ">
-                        <OrderDetails />
-                    </Modal>
-                }
-            </div>
+            <OrderBox />
         </div>
     );
 }
 
-const WithToggleModalBurgerConstructor = withToggleModal(BurgerConstructor);
-
-BurgerConstructor.propTypes = {
-    products: PropTypes.arrayOf(ingredientPropTypes),
-    onClick: PropTypes.func.isRequired,
-    isModalOpen: PropTypes.bool.isRequired,
-};
-Ingredient.propTypes = {
-    ingredient: ingredientPropTypes,
-    type: PropTypes.string.isRequired,
-};
-
-export default WithToggleModalBurgerConstructor; 
+export default BurgerConstructor; 
