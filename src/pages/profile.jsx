@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Navigate, NavLink } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./profile.module.css";
 import AppHeader from "../components/app-header/app-header";
