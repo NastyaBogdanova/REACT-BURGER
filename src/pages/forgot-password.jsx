@@ -14,9 +14,9 @@ export function ForgotPasswordPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const submit = async (e) => {
+    const submit = (e) => {
         e.preventDefault();
-        await dispatch(forgotPassword(mail));
+        dispatch(forgotPassword(mail));
     };
 
     if (forgotPasswordSuccess) {

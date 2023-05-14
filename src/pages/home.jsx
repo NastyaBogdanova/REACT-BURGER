@@ -7,19 +7,16 @@ import BurgerIngredients from "../components/burger-ingredients/burger-ingredien
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { deleteIngredientFromModlal } from '../services/actions/modal';
-import { Navigate, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export function HomePage() {
 
     const { ingredients, request, failed } = useSelector(store => store.ingredients);
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleCloseModal = () => {
-        dispatch(deleteIngredientFromModlal());
         navigate("/");
     }
 
@@ -42,7 +39,7 @@ export function HomePage() {
                     <BurgerConstructor />
                 </main>
             </DndProvider>
-            {location.state?.fromHomePage &&
+            {location.state?.backgroundLocation &&
                 <Modal onClose={handleCloseModal} title="Детали ингредиента">
                     <IngredientDetails />
                 </Modal>

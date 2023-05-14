@@ -7,7 +7,7 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { registerUser } from '../services/actions/user';
 
 export function RegisterPage() {
-    const { registerFailed, loggedIn } = useSelector(store => store.user);
+    const { registerFailed } = useSelector(store => store.user);
 
     const [name, setName] = React.useState("");
     const [mail, setMail] = React.useState("");
@@ -19,14 +19,6 @@ export function RegisterPage() {
         e.preventDefault();
         await dispatch(registerUser(name, mail, password));
     };
-
-    if (loggedIn) {
-        return (
-            <Navigate
-                to={'/'}
-            />
-        );
-    }
 
     return (
         <div className={styles.background}>

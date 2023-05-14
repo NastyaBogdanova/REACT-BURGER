@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfilePage } from './pages/profile';
@@ -22,23 +22,20 @@ const App = () => {
         dispatch(getUser());
     }, []);
 
-    const { ingredient } = useSelector(store => store.modal);
+    const location = useLocation();
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/ingredients/:id" element={ingredient ? <HomePage /> : <IngredientPage />} />
-
-                <Route path="/register" element={<ProtectedRouteElement onlyForUnauth={true} element={<RegisterPage />} />} />
-                <Route path="/login" element={<ProtectedRouteElement onlyForUnauth={true} element={<LoginPage />} />} />
-                <Route path="/forgot-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ForgotPasswordPage />} />} />
-                <Route path="/reset-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ResetPasswordPage />} />} />
-                <Route path="/not-found404" element={<NotFound />} />
-                <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfilePage />} />} />
-                <Route path="/profile/orders" element={<ProtectedRouteElement onlyForUnauth={false} element={<OrdersHistoryPage />} />} />
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/ingredients/:id" element={location.state?.backgroundLocation ? <HomePage /> : <IngredientPage />} />
+            <Route path="/register" element={<ProtectedRouteElement onlyForUnauth={true} element={<RegisterPage />} />} />
+            <Route path="/login" element={<ProtectedRouteElement onlyForUnauth={true} element={<LoginPage />} />} />
+            <Route path="/forgot-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ForgotPasswordPage />} />} />
+            <Route path="/reset-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ResetPasswordPage />} />} />
+            <Route path="/not-found404" element={<NotFound />} />
+            <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfilePage />} />} />
+            <Route path="/profile/orders" element={<ProtectedRouteElement onlyForUnauth={false} element={<OrdersHistoryPage />} />} />
+        </Routes>
     )
 }
 
