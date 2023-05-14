@@ -18,10 +18,14 @@ export function ProtectedRouteElement({ element, onlyForUnauth }) {
         return element;
     }
     if (onlyForUnauth && loggedIn) {
-        return <Navigate to="/" />;
+        if (location.state?.from) {
+            return <Navigate to={location.state.from} />;
+        } else {
+            return <Navigate to="/" />;
+        }
     }
     if (!loggedIn) {
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        return <Navigate to="/login" state={{ from: location.pathname }} />;
     }
 
     return element;

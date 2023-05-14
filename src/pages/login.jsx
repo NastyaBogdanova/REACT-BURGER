@@ -7,27 +7,17 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { loginUser } from '../services/actions/user';
 
 export function LoginPage() {
-    const { loginFailed, loggedIn, user } = useSelector(store => store.user);
+    const { loginFailed } = useSelector(store => store.user);
 
     const [mail, setMail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const navigate = useNavigate();
-    const location = useLocation();
     const dispatch = useDispatch();
 
     const submit = async (e) => {
         e.preventDefault();
         await dispatch(loginUser(mail, password));
     };
-
-    if (loggedIn) {
-        if (location.state?.from) {
-            navigate(location.state?.from);
-        } else {
-            navigate('/');
-        }
-    }
 
     return (
         <div className={styles.background}>
@@ -44,13 +34,11 @@ export function LoginPage() {
                         error={false}
                         errorText={'Ошибка'}
                         extraClass="mb-6"
-                        required
                     />
                     <PasswordInput
                         onChange={e => setPassword(e.target.value)}
                         value={password}
                         name={'password'}
-                        required
                     />
                     {loginFailed &&
                         <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка, попробуйте ещё раз.</span>

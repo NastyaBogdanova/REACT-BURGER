@@ -16,18 +16,22 @@ export function ResetPasswordPage() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const submit = async (e) => {
-        e.preventDefault();
-        await dispatch(resetPassword(password, code));
-        setPassword("");
-        setCode("");
-    };
-
     useEffect(() => {
         if (!location.state?.fromForgotPassword) {
             navigate('/forgot-password');
         }
     }, []);
+
+    const submit = async (e) => {
+        e.preventDefault();
+        await dispatch(resetPassword(password, code));
+    };
+
+    if (resetPasswordSuccess) {
+        navigate('/login');
+        setPassword("");
+        setCode("");
+    }
 
     return (
         <div className={styles.background}>

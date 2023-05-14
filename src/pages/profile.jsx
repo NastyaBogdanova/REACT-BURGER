@@ -29,16 +29,17 @@ export function ProfilePage() {
         e.preventDefault();
         await dispatch(logOutUser());
     };
+
     const onNameChange = (e) => {
         setName(e.target.value);
         setisInputChanged(true);
     };
     const onMailChange = (e) => {
-        setName(e.target.value);
+        setMail(e.target.value);
         setisInputChanged(true);
     };
     const onPasswordChange = (e) => {
-        setName(e.target.value);
+        setPassword(e.target.value);
         setisInputChanged(true);
     };
     const submit = async (e) => {
