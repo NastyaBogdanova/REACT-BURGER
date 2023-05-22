@@ -1,29 +1,37 @@
 import styles from "./app-header.module.css";
+import { NavLink, useMatch } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const AppHeader = () => {
+    const isMain = useMatch("/");
+    const isOrders = useMatch("/profile/orders");
+    const isProfile = useMatch("/profile");
+
+    const userName = useSelector(store => store.user.user?.name);
+
     return (
         <header className={`${styles.header} p-4`}>
             <div className={styles.content}>
                 <nav className={styles.nav}>
-                    <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
-                        <BurgerIcon type="primary" />
+                    <NavLink to={`/`} className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pr-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pr-5 pb-4 pt-4`)}>
+                        <BurgerIcon type={isMain ? "primary" : "secondary"} />
                         Конструктор
-                    </a>
-                    <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
-                        <ListIcon type="secondary" />
+                    </NavLink>
+                    <NavLink to={'/profile/orders'} className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pl-5 pr-5 pb-4 pt-4`)}>
+                        <ListIcon type={isOrders ? "primary" : "secondary"} />
                         Лента заказов
-                    </a>
+                    </NavLink>
                 </nav>
                 <div className={styles.logo}>
                     <Logo />
                 </div>
-                <a className={`${styles.link} text text_type_main-default text_color_primary pl-5 pr-5 pb-4 pt-4`} href="">
-                    <ProfileIcon type="secondary" />
-                    Личный кабинет
-                </a>
+                <NavLink to={`/profile`} end className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pl-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pl-5 pb-4 pt-4`)}>
+                    <ProfileIcon type={isProfile ? "primary" : "secondary"} />
+                    {userName ? userName : "Личный кабинет"}
+                </NavLink>
             </div>
-        </header>
+        </header >
     );
 }
 

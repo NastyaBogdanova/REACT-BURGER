@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import styles from "./burger-ingredients.module.css";
-import ingredientPropTypes from "../../utils/types";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';

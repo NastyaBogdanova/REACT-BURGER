@@ -1,0 +1,46 @@
+.background {
+    background-color: var(--background-alt);
+}
+.main {
+    max-width: 1320px;
+    margin: 120px auto;
+    width: 100%;
+}
+.box {
+    display: flex;
+}
+.leftbox {
+    display: flex;
+    flex-direction: column;
+    max-width: 330px;
+    margin-right: 60px;
+}
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+.button {
+    text-decoration: none;
+    line-height: 64px !important;
+    cursor: pointer;
+}
+.button:hover {
+    color: #F2F2F3;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+}
+.buttons {
+    display: flex;
+    justify-content: right;
+}
+.error {
+    color: red;
+    text-align: center;
+}
+.success {
+    color: #F2F2F3;
+    text-align: center;
+}
