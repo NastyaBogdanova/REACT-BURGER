@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./profile.module.css";
-import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOutUser, editUser } from '../services/actions/user';
 import { RootState } from "../utils/types";
@@ -55,7 +54,6 @@ export const ProfilePage = () => {
 
     return (
         <div className={styles.background}>
-            <AppHeader />
             <div className={`${styles.main} p-4`}>
                 <div className={styles.box}>
                     <div className={styles.leftbox}>

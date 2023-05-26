@@ -13,6 +13,7 @@ import { IngredientPage } from './pages/ingredient';
 import { ProtectedRouteElement } from './components/protected-route-element/protected-route-element';
 import { getIngridients } from './services/actions/ingredients';
 import { getUser } from './services/actions/user';
+import AppHeader from './components/app-header/app-header';
 
 const App = () => {
 
@@ -29,15 +30,17 @@ const App = () => {
 
     return (
         <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/ingredients/:id" element={location.state?.backgroundLocation ? <HomePage /> : <IngredientPage />} />
-            <Route path="/register" element={<ProtectedRouteElement onlyForUnauth={true} element={<RegisterPage />} />} />
-            <Route path="/login" element={<ProtectedRouteElement onlyForUnauth={true} element={<LoginPage />} />} />
-            <Route path="/forgot-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ForgotPasswordPage />} />} />
-            <Route path="/reset-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ResetPasswordPage />} />} />
-            <Route path="/not-found404" element={<NotFound />} />
-            <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfilePage />} />} />
-            <Route path="/profile/orders" element={<ProtectedRouteElement onlyForUnauth={false} element={<OrdersHistoryPage />} />} />
+            <Route path="/" element={<AppHeader />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/ingredients/:id" element={location.state?.backgroundLocation ? <HomePage /> : <IngredientPage />} />
+                <Route path="/register" element={<ProtectedRouteElement onlyForUnauth={true} element={<RegisterPage />} />} />
+                <Route path="/login" element={<ProtectedRouteElement onlyForUnauth={true} element={<LoginPage />} />} />
+                <Route path="/forgot-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ForgotPasswordPage />} />} />
+                <Route path="/reset-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ResetPasswordPage />} />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfilePage />} />} />
+                <Route path="/profile/orders" element={<ProtectedRouteElement onlyForUnauth={false} element={<OrdersHistoryPage />} />} />
+            </Route>
         </Routes>
     )
 }

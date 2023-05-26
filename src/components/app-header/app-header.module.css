@@ -1,10 +1,12 @@
 .header {
     background-color: var(--background);
+    width: 100%;
 }
 .content {
     max-width: 1320px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: auto;
 }
 .nav {

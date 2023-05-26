@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./form.module.css";
-import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUser } from '../services/actions/user';
 import { RootState } from "../utils/types";
@@ -25,7 +24,6 @@ export const RegisterPage = () => {
 
     return (
         <div className={styles.background}>
-            <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
                 <form className={styles.form} onSubmit={submit}>

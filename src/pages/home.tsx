@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./home.module.css";
-import AppHeader from "../components/app-header/app-header";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import Modal from "../components/modal/modal";
@@ -23,7 +22,6 @@ export const HomePage = () => {
 
     return (
         <div className={styles.app}>
-            <AppHeader />
             <DndProvider backend={HTML5Backend}>
                 <main className={styles.main}>
                     <div>
