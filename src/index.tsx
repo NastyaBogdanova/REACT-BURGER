@@ -8,7 +8,7 @@ import { store } from './services/store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root')
+    document.getElementById('root')!
 );
 root.render(
     <Router>

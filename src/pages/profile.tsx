@@ -5,11 +5,13 @@ import styles from "./profile.module.css";
 import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOutUser, editUser } from '../services/actions/user';
+import { RootState } from "../utils/types";
 
-export function ProfilePage() {
+export const ProfilePage = () => {
+
     const dispatch = useDispatch();
 
-    const { logOutFailed, user, editUserFailed, editUserSuccess } = useSelector(store => store.user);
+    const { logOutFailed, user, editUserFailed, editUserSuccess } = useSelector((store: RootState) => store.user);
 
     const [name, setName] = React.useState(user.name);
     const [mail, setMail] = React.useState(user.email);
@@ -17,7 +19,7 @@ export function ProfilePage() {
 
     const [isInputChanged, setisInputChanged] = React.useState(false);
 
-    const cancelEdit = () => {
+    const cancelEdit = (): void => {
         if (user) {
             setName(user.name);
             setMail(user.email);
@@ -25,26 +27,29 @@ export function ProfilePage() {
             setisInputChanged(false);
         }
     }
-    const logOut = async (e) => {
+    const logOut = (e: React.MouseEvent<HTMLAnchorElement>): void => {
         e.preventDefault();
-        await dispatch(logOutUser());
+        //@ts-ignore
+        dispatch(logOutUser());
     };
 
-    const onNameChange = (e) => {
+    const onNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setName(e.target.value);
         setisInputChanged(true);
     };
-    const onMailChange = (e) => {
+    const onMailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setMail(e.target.value);
         setisInputChanged(true);
     };
-    const onPasswordChange = (e) => {
+    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(e.target.value);
         setisInputChanged(true);
     };
-    const submit = async (e) => {
+
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        await dispatch(editUser(mail, name, password));
+        //@ts-ignore
+        dispatch(editUser(mail, name, password));
         setisInputChanged(false);
     };
 
@@ -82,7 +87,6 @@ export function ProfilePage() {
                             placeholder="Логин"
                             isIcon={true}
                             extraClass="mb-6"
-                            icon={'EditIcon'}
                         />
                         <PasswordInput
                             onChange={onPasswordChange}

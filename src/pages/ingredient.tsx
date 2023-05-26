@@ -2,8 +2,7 @@ import styles from "../components/ingredient-details/ingredient-details.module.c
 import AppHeader from "../components/app-header/app-header";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 
-export function IngredientPage() {
-
+export const IngredientPage = () => {
     return (
         <div className={styles.background}>
             <AppHeader />
@@ -11,7 +10,6 @@ export function IngredientPage() {
                 <h1 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h1>
                 <IngredientDetails />
             </div>
-
         </div>
     )
 }

@@ -5,18 +5,21 @@ import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../services/actions/user';
+import { RootState } from "../utils/types";
 
-export function LoginPage() {
-    const { loginFailed } = useSelector(store => store.user);
+export const LoginPage = () => {
+
+    const { loginFailed } = useSelector((store: RootState) => store.user);
 
     const [mail, setMail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
     const dispatch = useDispatch();
 
-    const submit = async (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        await dispatch(loginUser(mail, password));
+        //@ts-ignore
+        dispatch(loginUser(mail, password));
     };
 
     return (

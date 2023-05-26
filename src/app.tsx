@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ProfilePage } from './pages/profile';
 import { HomePage } from './pages/home';
 import { RegisterPage } from './pages/register';
@@ -15,10 +15,13 @@ import { getIngridients } from './services/actions/ingredients';
 import { getUser } from './services/actions/user';
 
 const App = () => {
+
     const dispatch = useDispatch();
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getIngridients());
+        //@ts-ignore
         dispatch(getUser());
     }, []);
 

@@ -1,4 +1,5 @@
-import { request, setCookie, deleteCookie, getCookie } from "../../utils/api";
+import { request } from "../../utils/api";
+import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
 
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
@@ -247,8 +248,8 @@ export function logOutUser() {
                     dispatch({
                         type: LOGOUT_USER_SUCCESS
                     })
-                    deleteCookie('token');
-                    deleteCookie('refreshToken');
+                    removeCookie('token');
+                    removeCookie('refreshToken');
                 } else {
                     dispatch({
                         type: LOGOUT_USER_FAILED

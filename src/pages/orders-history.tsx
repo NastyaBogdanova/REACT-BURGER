@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./profile.module.css";
 import AppHeader from "../components/app-header/app-header";
 
-export function OrdersHistoryPage() {
+export const OrdersHistoryPage = () => {
     return (
         <div className={styles.background}>
             <AppHeader />

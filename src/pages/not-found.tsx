@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
 
-export function NotFound() {
+export const NotFound = () => {
     return (
         <div className={styles.background}>
             <AppHeader />

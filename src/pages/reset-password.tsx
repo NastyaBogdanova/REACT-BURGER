@@ -5,9 +5,11 @@ import styles from "./form.module.css";
 import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../services/actions/password';
+import { RootState } from "../utils/types";
 
-export function ResetPasswordPage() {
-    const { resetPasswordFailed, resetPasswordSuccess } = useSelector(store => store.password);
+export const ResetPasswordPage = () => {
+
+    const { resetPasswordFailed, resetPasswordSuccess } = useSelector((store: RootState) => store.password);
 
     const [password, setPassword] = React.useState("");
     const [code, setCode] = React.useState("");
@@ -22,9 +24,10 @@ export function ResetPasswordPage() {
         }
     }, []);
 
-    const submit = async (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        await dispatch(resetPassword(password, code));
+        //@ts-ignore
+        dispatch(resetPassword(password, code));
     };
 
     if (resetPasswordSuccess) {

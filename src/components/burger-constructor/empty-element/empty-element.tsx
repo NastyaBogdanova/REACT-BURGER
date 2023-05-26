@@ -1,25 +1,24 @@
-import PropTypes from 'prop-types'
 import styles from "../burger-constructor.module.css";
 import burgerImagePath from '../../../images/burger.svg';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const EmptyElement = ({ text, type }) => {
+const EmptyElement = ({ text, type }: TEmptyElement) => {
     return (
         <div className={styles.item} >
             <ConstructorElement
                 type={type}
                 text={text}
                 isLocked={true}
-                price="0"
+                price={0}
                 thumbnail={burgerImagePath}
             />
         </div>
     )
 }
 
-EmptyElement.propTypes = {
-    text: PropTypes.string.isRequired,
-    type: PropTypes.string
+type TEmptyElement = {
+    text: string;
+    type?: "bottom" | "top";
 };
 
 export default EmptyElement;

@@ -2,13 +2,14 @@ import styles from "./app-header.module.css";
 import { NavLink, useMatch } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { RootState } from "../../utils/types";
 
 const AppHeader = () => {
     const isMain = useMatch("/");
     const isOrders = useMatch("/profile/orders");
     const isProfile = useMatch("/profile");
 
-    const userName = useSelector(store => store.user.user?.name);
+    const userName = useSelector((store: RootState) => store.user.user?.name);
 
     return (
         <header className={`${styles.header} p-4`}>
