@@ -1,9 +1,10 @@
 import styles from "./order-details.module.css";
 import doneImagePath from '../../images/done.svg';
 import { useSelector } from 'react-redux';
+import { RootState } from "../../utils/types";
 
 const OrderDetails = () => {
-    const { order } = useSelector(store => store.order);
+    const { order } = useSelector((store: RootState) => store.order);
     return (
         <div className={styles.container}>
             {order &&

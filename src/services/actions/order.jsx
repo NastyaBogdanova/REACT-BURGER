@@ -4,7 +4,7 @@ export const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 export const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
 
-export function sendOrder(ingredients, orderModalOpen) {
+export function sendOrder(ingredients) {
     const options = {
         method: 'POST',
         headers: {
@@ -30,7 +30,6 @@ export function sendOrder(ingredients, orderModalOpen) {
                     })
                 }
             })
-            .then(() => orderModalOpen())
             .catch(err => {
                 console.log(err);
                 dispatch({

@@ -1,21 +1,22 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import update from 'immutability-helper';
 import styles from "./burger-constructor.module.css";
-import { addIngredient, addBun, updateIngredients, deleteIngredient } from '../../services/actions/constructor';
+import { addIngredient, addBun } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
 import { DraggableElement } from './draggable-element/draggable-element';
 import OrderBox from './order-box/order-box';
 import EmptyElement from './empty-element/empty-element';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { RootState } from "../../utils/types";
+import { TIngredient, TConstructorIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const { bun, stuffings } = useSelector(store => store.constructor);
+    const { bun, stuffings } = useSelector((store: RootState) => store.constructor);
 
-    const handleDrop = useCallback((item) => {
+    const handleDrop = useCallback((item: TIngredient): void => {
         if (item.type === "bun") {
             dispatch(addBun(item));
         } else {
@@ -26,25 +27,10 @@ const BurgerConstructor = () => {
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: TIngredient) {
             handleDrop(item);
         }
     });
-
-    const moveElement = useCallback((dragIndex, hoverIndex) => {
-        const updatedElements = update(stuffings, {
-            $splice: [
-                [dragIndex, 1],
-                [hoverIndex, 0, stuffings[dragIndex]],
-            ],
-        })
-        dispatch(updateIngredients(updatedElements));
-    }, [stuffings, dispatch])
-
-    const deleteElement = (id) => {
-        dispatch(deleteIngredient(id));
-
-    }
 
     return (
         <div className={`${styles.container} mb-10 mt-25`}>
@@ -65,8 +51,8 @@ const BurgerConstructor = () => {
                 <div className={`${styles.customScroll} custom-scroll`}>
                     {stuffings !== undefined && stuffings.length !== 0 ?
                         <>
-                            {stuffings.map((item, index) =>
-                                <DraggableElement key={item.id} elem={item} index={index} moveElement={moveElement} deleteElement={deleteElement} />
+                            {stuffings.map((item: TConstructorIngredient, index: number) =>
+                                <DraggableElement key={item.id} elem={item} index={index} />
                             )}
                         </>
                         :

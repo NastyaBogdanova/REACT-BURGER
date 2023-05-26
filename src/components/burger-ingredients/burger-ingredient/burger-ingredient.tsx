@@ -1,33 +1,35 @@
-import ingredientPropTypes from "../../../utils/types";
 import styles from "../burger-ingredients.module.css";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from 'react-router-dom';
+import { RootState } from "../../../utils/types";
+import { TIngredient, TConstructorIngredient } from "../../../utils/types";
 
-const BurgerIngredient = ({ ingredient }) => {
+const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
 
     const location = useLocation();
 
-    const ingredients = useSelector(store => {
-        const { constructor } = store;
-        if (constructor.bun || constructor.stuffings) {
-            return constructor.stuffings ? [constructor.bun, constructor.bun, ...constructor.stuffings] : [constructor.bun, constructor.bun];
+    const { bun, stuffings } = useSelector((store: RootState) => store.constructor);
+
+    const ingredients = () => {
+        if (bun || stuffings) {
+            return stuffings ? [bun, bun, ...stuffings] : [bun, bun];
         } else {
             return [];
         }
-    });
+    };
 
     const [, dragRef] = useDrag({
         type: "ingredient",
         item: ingredient
     });
 
-    const counter = () => {
-        return ingredients.filter(item => item?._id === ingredient._id).length;
+    const counter = (): number => {
+        return ingredients().filter(item => item?._id === ingredient._id).length;
     }
 
-    const count = counter();
+    const count: number = counter();
 
     return (
         <Link to={`/ingredients/${ingredient._id}`} state={{ backgroundLocation: location }} className={styles.item} ref={dragRef}>
@@ -39,8 +41,8 @@ const BurgerIngredient = ({ ingredient }) => {
     )
 }
 
-BurgerIngredient.propTypes = {
-    ingredient: ingredientPropTypes.isRequired
+type TBurgerIngredient = {
+    ingredient: TIngredient;
 };
 
 export default BurgerIngredient; 

@@ -5,12 +5,12 @@ export const UPDATE_INGREDIENTS = 'UPDATE_INGREDIENTS';
 export const RESET_INGREDIENTS = 'RESET_INGREDIENTS';
 
 export const addIngredient = (item) => {
+    item.id = crypto.randomUUID();
     return {
         type: ADD_INGREDIENT,
         payload: {
-            ...item, id: crypto.randomUUID()
+            ...item,
         }
-
     };
 };
 export const addBun = (bun) => {

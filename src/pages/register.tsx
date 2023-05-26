@@ -2,12 +2,13 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./form.module.css";
-import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUser } from '../services/actions/user';
+import { RootState } from "../utils/types";
 
-export function RegisterPage() {
-    const { registerFailed } = useSelector(store => store.user);
+export const RegisterPage = () => {
+
+    const { registerFailed } = useSelector((store: RootState) => store.user);
 
     const [name, setName] = React.useState("");
     const [mail, setMail] = React.useState("");
@@ -15,14 +16,14 @@ export function RegisterPage() {
 
     const dispatch = useDispatch();
 
-    const submit = async (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        await dispatch(registerUser(name, mail, password));
+        //@ts-ignore
+        dispatch(registerUser(name, mail, password));
     };
 
     return (
         <div className={styles.background}>
-            <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
                 <form className={styles.form} onSubmit={submit}>

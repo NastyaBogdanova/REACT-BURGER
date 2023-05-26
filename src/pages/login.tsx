@@ -2,26 +2,27 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./form.module.css";
-import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../services/actions/user';
+import { RootState } from "../utils/types";
 
-export function LoginPage() {
-    const { loginFailed } = useSelector(store => store.user);
+export const LoginPage = () => {
+
+    const { loginFailed } = useSelector((store: RootState) => store.user);
 
     const [mail, setMail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
     const dispatch = useDispatch();
 
-    const submit = async (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        await dispatch(loginUser(mail, password));
+        //@ts-ignore
+        dispatch(loginUser(mail, password));
     };
 
     return (
         <div className={styles.background}>
-            <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Вход</h2>
                 <form className={styles.form} onSubmit={submit}>

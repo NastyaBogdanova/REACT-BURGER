@@ -2,21 +2,24 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from '../../services/actions/user';
-import PropTypes from 'prop-types';
+import { RootState } from "../../utils/types";
 
-export function ProtectedRouteElement({ element, onlyForUnauth }) {
+export const ProtectedRouteElement = ({ element, onlyForUnauth }: TProtectedRouteElement) => {
+
     const dispatch = useDispatch();
     const location = useLocation();
 
     useEffect(() => {
-        dispatch(getUser())
+        //@ts-ignore
+        dispatch(getUser());
     }, []);
 
-    const { loggedIn } = useSelector(store => store.user);
+    const { loggedIn } = useSelector((store: RootState) => store.user);
 
     if (onlyForUnauth && !loggedIn) {
         return element;
     }
+
     if (onlyForUnauth && loggedIn) {
         if (location.state?.from) {
             return <Navigate to={location.state.from} />;
@@ -24,6 +27,7 @@ export function ProtectedRouteElement({ element, onlyForUnauth }) {
             return <Navigate to="/" />;
         }
     }
+
     if (!loggedIn) {
         return <Navigate to="/login" state={{ from: location.pathname }} />;
     }
@@ -31,7 +35,7 @@ export function ProtectedRouteElement({ element, onlyForUnauth }) {
     return element;
 }
 
-ProtectedRouteElement.propTypes = {
-    element: PropTypes.element.isRequired,
-    onlyForUnauth: PropTypes.bool
+type TProtectedRouteElement = {
+    element: JSX.Element;
+    onlyForUnauth: boolean;
 };

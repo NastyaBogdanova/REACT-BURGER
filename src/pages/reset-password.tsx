@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import styles from "./form.module.css";
-import AppHeader from "../components/app-header/app-header";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../services/actions/password';
+import { RootState } from "../utils/types";
 
-export function ResetPasswordPage() {
-    const { resetPasswordFailed, resetPasswordSuccess } = useSelector(store => store.password);
+export const ResetPasswordPage = () => {
+
+    const { resetPasswordFailed, resetPasswordSuccess } = useSelector((store: RootState) => store.password);
 
     const [password, setPassword] = React.useState("");
     const [code, setCode] = React.useState("");
@@ -22,9 +23,10 @@ export function ResetPasswordPage() {
         }
     }, []);
 
-    const submit = async (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        await dispatch(resetPassword(password, code));
+        //@ts-ignore
+        dispatch(resetPassword(password, code));
     };
 
     if (resetPasswordSuccess) {
@@ -35,7 +37,6 @@ export function ResetPasswordPage() {
 
     return (
         <div className={styles.background}>
-            <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
                 <form className={styles.form} onSubmit={submit}>

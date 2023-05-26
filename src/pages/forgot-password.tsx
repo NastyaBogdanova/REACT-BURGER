@@ -2,20 +2,22 @@ import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom'
 import styles from "./form.module.css";
-import AppHeader from "../components/app-header/app-header";
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from '../services/actions/password';
+import { RootState } from "../utils/types";
 
-export function ForgotPasswordPage() {
-    const { forgotPasswordFailed, forgotPasswordSuccess } = useSelector(store => store.password);
+export const ForgotPasswordPage = () => {
+
+    const { forgotPasswordFailed, forgotPasswordSuccess } = useSelector((store: RootState) => store.password);
 
     const [mail, setMail] = React.useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const submit = (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
+        //@ts-ignore
         dispatch(forgotPassword(mail));
     };
 
@@ -25,7 +27,6 @@ export function ForgotPasswordPage() {
 
     return (
         <div className={styles.background}>
-            <AppHeader />
             <div className={styles.main}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
                 <form className={styles.form} onSubmit={submit}>
@@ -33,7 +34,6 @@ export function ForgotPasswordPage() {
                         onChange={e => setMail(e.target.value)}
                         value={mail}
                         name={'email'}
-                        errorText={'Введите e-mail в формате example@mail.com'}
                         required
                     />
                     {forgotPasswordFailed &&
