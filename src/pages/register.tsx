@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUser } from '../services/actions/user';
-import { RootState } from "../utils/types";
+import { RootState } from "../services/types/index";
 
 export const RegisterPage = () => {
 
@@ -18,7 +18,6 @@ export const RegisterPage = () => {
 
     const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(registerUser(name, mail, password));
     };
 

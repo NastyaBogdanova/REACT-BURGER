@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../services/types/hooks';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from "./home.module.css";
+import styles from "./basic.module.css";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RootState } from "../utils/types";
+import { RootState } from "../services/types/index";
 
 export const HomePage = () => {
 

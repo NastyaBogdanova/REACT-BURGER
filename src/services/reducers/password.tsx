@@ -1,9 +1,19 @@
 import {
     FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILED,
-    RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED
+    RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED,
+    TPasswordActions
 } from "../actions/password";
 
-const initialState = {
+type TPasswordState = {
+    forgotPasswordRequest: boolean,
+    forgotPasswordFailed: boolean,
+    forgotPasswordSuccess: boolean,
+    resetPasswordRequest: boolean,
+    resetPasswordFailed: boolean,
+    resetPasswordSuccess: boolean
+}
+
+const initialState: TPasswordState = {
     forgotPasswordRequest: false,
     forgotPasswordFailed: false,
     forgotPasswordSuccess: false,
@@ -12,7 +22,7 @@ const initialState = {
     resetPasswordSuccess: false
 }
 
-export const passwordReducer = (state = initialState, action) => {
+export const passwordReducer = (state = initialState, action: TPasswordActions): TPasswordState => {
     switch (action.type) {
         case FORGOT_PASSWORD_REQUEST: {
             return {

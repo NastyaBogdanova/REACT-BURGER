@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/types/hooks';
 import styles from "../burger-constructor.module.css";
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
@@ -7,7 +7,7 @@ import { resetIngredients } from '../../../services/actions/constructor';
 import { sendOrder } from '../../../services/actions/order';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from "../../../utils/types";
+import { RootState } from "../../../services/types/index";
 import { TConstructorIngredient } from "../../../utils/types";
 
 const OrderBox = () => {
@@ -35,9 +35,8 @@ const OrderBox = () => {
     };
 
     const submit = (): void => {
-        if (loggedIn) {
+        if (loggedIn && stuffings && bun) {
             const ingredientsId: string[] = [bun, ...stuffings, bun].map(item => item._id);
-            //@ts-ignore
             dispatch(sendOrder(ingredientsId));
             setModalOpen(true);
         } else {

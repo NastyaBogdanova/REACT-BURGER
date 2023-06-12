@@ -3,13 +3,31 @@ import {
     LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILED,
     LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILED,
     GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED,
-    EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILED
+    EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILED,
+    TUser, TUserActions
 } from "../actions/user";
 
-const initialState = {
+type TUserState = {
+    user: TUser,
+    registerRequest: boolean,
+    registerFailed: boolean,
+    loggedIn: boolean,
+    loginRequest: boolean,
+    loginFailed: boolean,
+    logOutRequest: boolean,
+    logOutFailed: boolean,
+    getUserRequest: boolean,
+    getUserFailed: boolean,
+    getUserSuccess: boolean,
+    editUserRequest: boolean,
+    editUserFailed: boolean,
+    editUserSuccess: boolean,
+}
+
+const initialState: TUserState = {
     user: {
-        name: '',
-        email: ''
+        "email": "",
+        "name": "",
     },
     registerRequest: false,
     registerFailed: false,
@@ -26,7 +44,7 @@ const initialState = {
     editUserSuccess: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
     switch (action.type) {
         case REGISTER_USER_REQUEST: {
             return {
@@ -40,7 +58,7 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 registerRequest: false,
                 registerFailed: false,
-                user: action.data.user,
+                user: action.data,
                 loggedIn: true
             }
         }
@@ -63,7 +81,7 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 loginRequest: false,
                 loginFailed: false,
-                user: action.data.user,
+                user: action.data,
                 loggedIn: true
             }
         }
@@ -87,8 +105,8 @@ export const userReducer = (state = initialState, action) => {
                 logOutRequest: false,
                 logOutFailed: false,
                 user: {
-                    name: '',
-                    email: ''
+                    "email": "",
+                    "name": "",
                 },
                 loggedIn: false
             }

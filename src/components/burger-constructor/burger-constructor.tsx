@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import styles from "./burger-constructor.module.css";
 import { addIngredient, addBun } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
@@ -7,7 +7,7 @@ import { DraggableElement } from './draggable-element/draggable-element';
 import OrderBox from './order-box/order-box';
 import EmptyElement from './empty-element/empty-element';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RootState } from "../../utils/types";
+import { RootState } from "../../services/types/index";
 import { TIngredient, TConstructorIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {

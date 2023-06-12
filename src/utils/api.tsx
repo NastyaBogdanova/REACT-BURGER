@@ -6,10 +6,10 @@ export type TOptions = {
         "Content-Type": string;
         Authorization?: string;
     };
-    body: string;
+    body?: string;
 };
 
-export function request(endpoint: string, options: TOptions): Promise<any> {
+export function request(endpoint: string, options?: TOptions): Promise<any> {
     return fetch((`${api}/${endpoint}`), options).then(checkResponse);
 }
 

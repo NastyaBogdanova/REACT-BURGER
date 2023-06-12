@@ -1,10 +1,10 @@
 import styles from "../burger-ingredients.module.css";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/types/hooks';
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from 'react-router-dom';
-import { RootState } from "../../../utils/types";
-import { TIngredient, TConstructorIngredient } from "../../../utils/types";
+import { RootState } from "../../../services/types/index";
+import { TIngredient } from "../../../utils/types";
 
 const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
 

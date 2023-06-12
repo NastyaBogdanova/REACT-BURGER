@@ -1,0 +1,22 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    margin: 120px 0 0 0;
+}
+.buttons {
+    display: flex;
+    justify-content: right;
+}
+.error {
+    color: red;
+    text-align: center;
+}
+.success {
+    color: #F2F2F3;
+    text-align: center;
+}
+.container {
+    max-width: 844px;
+    width: 100%;
+}

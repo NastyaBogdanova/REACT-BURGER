@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../services/types/hooks";
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../services/actions/password';
-import { RootState } from "../utils/types";
+import { RootState } from "../services/types/index";
 
 export const ResetPasswordPage = () => {
 
@@ -25,7 +25,6 @@ export const ResetPasswordPage = () => {
 
     const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(resetPassword(password, code));
     };
 

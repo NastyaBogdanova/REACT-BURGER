@@ -1,11 +1,12 @@
 import { useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/types/hooks';
 import { useDrag, useDrop, XYCoord } from 'react-dnd';
 import styles from "../burger-constructor.module.css";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import update from 'immutability-helper';
 import { updateIngredients, deleteIngredient } from '../../../services/actions/constructor';
-import { RootState, TConstructorIngredient } from "../../../utils/types";
+import { RootState } from "../../../services/types/index";
+import { TConstructorIngredient } from "../../../utils/types";
 import { Identifier } from 'dnd-core';
 
 export const DraggableElement = ({ elem, index }: TDraggableElement) => {

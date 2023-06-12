@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../services/actions/user';
-import { RootState } from "../utils/types";
+import { RootState } from "../services/types/index";
 
 export const LoginPage = () => {
 
@@ -17,7 +17,6 @@ export const LoginPage = () => {
 
     const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(loginUser(mail, password));
     };
 

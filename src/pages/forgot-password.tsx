@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../services/types/hooks";
 import { Link, useNavigate } from 'react-router-dom'
 import styles from "./form.module.css";
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from '../services/actions/password';
-import { RootState } from "../utils/types";
+import { RootState } from "../services/types/index";
 
 export const ForgotPasswordPage = () => {
 
@@ -17,7 +17,6 @@ export const ForgotPasswordPage = () => {
 
     const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(forgotPassword(mail));
     };
 

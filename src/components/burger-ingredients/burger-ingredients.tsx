@@ -3,8 +3,9 @@ import styles from "./burger-ingredients.module.css";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
-import { useSelector } from 'react-redux';
-import { RootState, TIngredient } from "../../utils/types";
+import { useSelector } from '../../services/types/hooks';
+import { RootState } from "../../services/types/index";
+import { TIngredient } from "../../utils/types";
 
 const BurgerIngredients = () => {
     const [current, setCurrent] = React.useState('Булки');

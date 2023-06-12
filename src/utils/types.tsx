@@ -1,5 +1,3 @@
-import { rootReducer } from '../services/reducers/root';
-
 export type TIngredient = {
     _id: string;
     name: string;
@@ -20,4 +18,16 @@ export type TConstructorIngredient = TIngredient & {
     id: string;
 };
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type TOrder = {
+    ingredients: string[],
+    _id: string,
+    status: 'done' | 'pending' | 'created',
+    number: number,
+    createdAt: string,
+    updatedAt: string,
+    name: string
+}
+
+export type TOrders = {
+    orders: TOrder[],
+}

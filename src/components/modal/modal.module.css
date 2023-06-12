@@ -5,8 +5,8 @@
     width: 600px;
     min-height: 300px;
     padding: 40px;
-    z-index: 2;
-    position: fixed;
+    z-index: 1000002;
+    position: absolute;
     top: calc(50% - 250px);
     left: calc(50% - 600px/2);
 }
