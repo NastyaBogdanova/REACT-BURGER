@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./profile.module.css";
@@ -6,6 +6,8 @@ import { logOutUser } from '../services/actions/user';
 import { RootState } from "../services/types/index";
 import { FeedDetails } from "../components/feed/feed-details";
 import Modal from "../components/modal/modal";
+import { wsConnectionProfileStart, wsConnectionProfileClosed } from "../services/actions/webSocketProfile";
+import { getCookie } from 'typescript-cookie';
 
 export const ProfilePage = () => {
 
@@ -14,6 +16,7 @@ export const ProfilePage = () => {
     const location = useLocation();
 
     const { logOutFailed } = useSelector((store: RootState) => store.user);
+    const { ordersProfile } = useSelector(store => store.wsProfile);
 
     const logOut = (e: React.MouseEvent<HTMLAnchorElement>): void => {
         e.preventDefault();
@@ -23,6 +26,13 @@ export const ProfilePage = () => {
     const handleCloseModal = (): void => {
         navigate("/profile/orders");
     }
+
+    useEffect(() => {
+        dispatch(wsConnectionProfileStart(`?token=${getCookie('token')}`));
+        return () => {
+            dispatch(wsConnectionProfileClosed());
+        }
+    }, []);
 
     return (
         <div className={styles.background}>
@@ -44,7 +54,7 @@ export const ProfilePage = () => {
             </div>
             {location.state?.backgroundLocation &&
                 <Modal onClose={handleCloseModal} title="">
-                    <FeedDetails />
+                    <FeedDetails orders={ordersProfile} />
                 </Modal>
             }
         </div>

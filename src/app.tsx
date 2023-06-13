@@ -14,6 +14,7 @@ import { ProtectedRouteElement } from './components/protected-route-element/prot
 import { FeedPage } from './pages/feed-page';
 import { FeedDetailsPage } from './pages/feed-details-page';
 import { ProfileInfo } from "./components/profile/profile-info";
+import { OrderDetailsPage } from "./pages/order-details-page";
 import { getIngridients } from './services/actions/ingredients';
 import { getUser } from './services/actions/user';
 import AppHeader from './components/app-header/app-header';
@@ -43,7 +44,7 @@ const App = () => {
                     <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfileInfo />} />} />
                     <Route path="/profile/orders" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfileOrders />} />} />
                 </Route>
-                <Route path="/profile/orders/:id" element={<ProtectedRouteElement onlyForUnauth={false} element={location.state?.backgroundLocation ? <ProfilePage /> : <FeedDetailsPage />} />} />
+                <Route path="/profile/orders/:id" element={<ProtectedRouteElement onlyForUnauth={false} element={location.state?.backgroundLocation ? <ProfilePage /> : <OrderDetailsPage />} />} />
                 <Route path="/feed" element={<FeedPage />} />
                 <Route path="/feed/:id" element={location.state?.backgroundLocation ? <FeedPage /> : <FeedDetailsPage />} />
             </Route>

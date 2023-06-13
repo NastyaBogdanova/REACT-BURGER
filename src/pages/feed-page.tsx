@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./feed-page.module.css";
 import { Feed } from '../components/feed/feed';
 import { FeedDetails } from "../components/feed/feed-details";
 import Modal from "../components/modal/modal";
-import { wsConnectionStart, wsConnectionClosed } from "../services/actions/webSocket";
+import { wsConnectionStart, wsConnectionClosed } from "../services/actions/webSocketFeed";
 
 export const FeedPage = () => {
 
@@ -31,7 +31,7 @@ export const FeedPage = () => {
             <div className={`${styles.main} p-4`}>
                 <div className="mb-10 mt-5">
                     <h1 className="title text text_type_main-large mb-5">Лента заказов</h1>
-                    <Feed />
+                    <Feed orders={orders} />
                 </div>
                 <div className={`${styles.container} mb-10 mt-20`}>
                     <div className={`${styles.status}`}>
@@ -64,7 +64,7 @@ export const FeedPage = () => {
             </div>
             {location.state?.backgroundLocation &&
                 <Modal onClose={handleCloseModal} title="">
-                    <FeedDetails />
+                    <FeedDetails orders={orders} />
                 </Modal>
             }
         </div>

@@ -1,26 +1,27 @@
 import styles from "./feed-page.module.css";
 import { FeedDetails } from '../components/feed/feed-details';
-import { wsConnectionStart, wsConnectionClosed } from "../services/actions/webSocketFeed";
+import { wsConnectionProfileStart, wsConnectionProfileClosed } from "../services/actions/webSocketProfile";
 import { useSelector, useDispatch } from "../services/types/hooks";
 import { useEffect } from 'react';
+import { getCookie } from 'typescript-cookie';
 
-export const FeedDetailsPage = () => {
+export const OrderDetailsPage = () => {
 
-    const { orders } = useSelector(store => store.ws);
+    const { ordersProfile } = useSelector(store => store.wsProfile);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(wsConnectionStart('/all'));
+        dispatch(wsConnectionProfileStart(`?token=${getCookie('token')}`));
         return () => {
-            dispatch(wsConnectionClosed());
+            dispatch(wsConnectionProfileClosed());
         }
     }, []);
 
     return (
         <div className={styles.background}>
             <div className={`${styles.container}`}>
-                <FeedDetails orders={orders} />
+                <FeedDetails orders={ordersProfile} />
             </div>
         </div>
     )

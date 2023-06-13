@@ -2,11 +2,10 @@ import { useSelector } from "../../services/types/hooks";
 import { useParams } from 'react-router-dom';
 import styles from "./feed.module.css";
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import type { TOrder, TIngredient } from '../../utils/types';
+import type { TOrder, TIngredient, TOrders } from '../../utils/types';
 import { prettierDate, totalPrice, translateStatusText } from '../../utils/functions';
 
-export const FeedDetails = () => {
-    const { orders } = useSelector(store => store.ws);
+export const FeedDetails = ({ orders }: TOrders) => {
 
     const { ingredients } = useSelector(store => store.ingredients);
 
@@ -41,8 +40,8 @@ export const FeedDetails = () => {
         <>
             <p className={`text text_type_digits-default`}>#{order.number}</p>
             <h1 className="text text_type_main-medium mt-5">{order.name}</h1>
-            <div className="text text_type_main-small">{translateStatusText(order.status)}</div>
-            <p className="text text_type_main-medium mt-5">Состав:</p>
+            <div className="text text_type_main-small mt-2">{translateStatusText(order.status)}</div>
+            <p className="text text_type_main-medium mt-15">Состав:</p>
             <ul className={`${styles.stuffings} ${styles.list} custom-scroll`}>
                 {orderIngredientsSet.map((ingredient: TIngredient, i: number) =>
                     <li className={`${styles.ingredient} pr-6 mb-4`} key={i}>
@@ -60,7 +59,7 @@ export const FeedDetails = () => {
                     </li>
                 )}
             </ul>
-            <div className={`${styles.info} mt-5`}>
+            <div className={`${styles.info} mt-10`}>
                 <p className="text text_type_main-default text_color_inactive">{prettierDate(order.createdAt)}</p>
                 <div className={`${styles.price} pr-6`}>
                     <p className="text text_type_digits-default">{totalPrice(orderIngredients)}&nbsp;</p>

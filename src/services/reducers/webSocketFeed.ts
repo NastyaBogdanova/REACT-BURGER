@@ -6,7 +6,7 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     TWSActions
-} from '../actions/webSocket';
+} from '../actions/webSocketFeed';
 
 type TWSState = {
     wsConnected: boolean;
@@ -24,7 +24,7 @@ const initialState: TWSState = {
     orders: []
 };
 
-export const wsReducer = (state = initialState, action: TWSActions): TWSState => {
+export const wsReducerFeed = (state = initialState, action: TWSActions): TWSState => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS:
             return {

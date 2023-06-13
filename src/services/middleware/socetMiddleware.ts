@@ -1,8 +1,14 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
+import { getNewToken } from '../../utils/api';
+import { getCookie } from 'typescript-cookie';
+import { wsConnectionStart } from '../actions/webSocketFeed';
 
 import type {
     TWSStoreActions
-} from '../actions/webSocket';
+} from '../actions/webSocketFeed';
+import type {
+    TWSProfileStoreActions
+} from '../actions/webSocketProfile';
 
 import type {
     AppDispatch,
@@ -10,12 +16,12 @@ import type {
     TAppActions
 } from '../types/index';
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions | TWSProfileStoreActions): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
         return next => (action: TAppActions) => {
-            const { dispatch, getState } = store;
+            const { dispatch } = store;
             const { type } = action;
             const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
 
@@ -35,9 +41,17 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                 socket.onmessage = event => {
                     const { data } = event;
                     const parsedData = JSON.parse(data);
-                    const { success, ...restParsedData } = parsedData;
 
-                    dispatch({ type: onMessage, payload: { ...restParsedData } });
+                    if (parsedData.message === "Invalid or missing token") {
+                        getNewToken()
+                            .then(() => {
+                                let accessToken = getCookie('token');
+                                socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+                                dispatch(wsConnectionStart(`?token=${accessToken}`));
+                            })
+                    }
+
+                    dispatch({ type: onMessage, payload: parsedData });
                 };
 
                 socket.onclose = event => {

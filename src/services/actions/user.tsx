@@ -1,4 +1,4 @@
-import { request } from "../../utils/api";
+import { request, getNewToken } from "../../utils/api";
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
 import { AppThunk } from "../types/index";
 
@@ -186,34 +186,6 @@ const checkUserRequest = (method: string, body?: string) => {
     return request('auth/user', options)
 }
 
-const getNewToken = async () => {
-    const token = getCookie('refreshToken');
-    const options = {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            'token': token
-        })
-    }
-    await request('auth/token', options)
-        .then(res => {
-            if (res.success) {
-                const authToken = res.accessToken.split('Bearer ')[1];
-                if (authToken) {
-                    setCookie('token', authToken, {});
-                }
-                setCookie('refreshToken', res.refreshToken, {});
-            } else {
-                console.log("Произошла ошибка при обновлении токена")
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
-}
-
 export const editUser: AppThunk = (email: string, name: string, password: string) => {
     const body = JSON.stringify({
         'email': email,
@@ -352,8 +324,8 @@ export const logOutUser: AppThunk = () => {
             .then(res => {
                 if (res.success) {
                     dispatch(logoutUserSuccess());
-                    removeCookie('token');
-                    removeCookie('refreshToken');
+                    removeCookie('token', {});
+                    removeCookie('refreshToken', {});
                 } else {
                     dispatch(logoutUserFaild());
                 }

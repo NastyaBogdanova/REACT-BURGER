@@ -1,4 +1,4 @@
-import { request } from "../../utils/api";
+import { request, getNewToken } from "../../utils/api";
 import { AppThunk } from "../types/index";
 import { TConstructorIngredient } from "../../utils/types";
 import { getCookie } from 'typescript-cookie';
@@ -52,7 +52,7 @@ const sendOrderFaild = (): TSendOrderFaild => {
 
 export const sendOrder: AppThunk = (ingredients: TConstructorIngredient[]) => {
     let authToken = getCookie('token');
-    const options = {
+    let options = {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -71,8 +71,29 @@ export const sendOrder: AppThunk = (ingredients: TConstructorIngredient[]) => {
                 }
             })
             .catch(err => {
-                console.log(err);
-                dispatch(sendOrderFaild());
+                if (err.message == "invalid token" || err.message == "jwt expired") {
+                    getNewToken()
+                        .then(() => {
+                            authToken = getCookie('token');
+                            options.headers.Authorization = 'Bearer ' + authToken;
+                            request('orders', options)
+                                .then(res => {
+                                    if (res.success) {
+                                        dispatch(sendOrderSuccess(res))
+                                    } else {
+                                        console.log("Произошла ошибка при создании заказа.");
+                                        dispatch(sendOrderFaild())
+                                    }
+                                })
+                                .catch(err => {
+                                    console.log(err.message);
+                                    dispatch(sendOrderFaild());
+                                })
+                        })
+                } else {
+                    console.log(err.message);
+                    dispatch(sendOrderFaild());
+                }
             })
     }
 } 
