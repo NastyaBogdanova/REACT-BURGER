@@ -63,6 +63,9 @@
 .blue {
     color: #00CCCC;
 }
+.red {
+    color: red;
+}
 .transparent {
     opacity: 0.6;
     position: absolute;

@@ -31,14 +31,14 @@ export const FeedPage = () => {
             <div className={`${styles.main} p-4`}>
                 <div className="mb-10 mt-5">
                     <h1 className="title text text_type_main-large mb-5">Лента заказов</h1>
-                    <Feed orders={orders} />
+                    <Feed />
                 </div>
                 <div className={`${styles.container} mb-10 mt-20`}>
                     <div className={`${styles.status}`}>
                         <div>
                             <h2 className="text text_type_main-medium">Готовы:</h2>
                             <ul className={`${styles.list} ${styles.columns}`}>
-                                {orders.slice(0, 10).filter((order) => order.status === 'done').map((order, index) => {
+                                {orders.slice(0, 20).filter((order) => order.status === 'done').map((order, index) => {
                                     return (<li className={`${styles.blue} text text_type_digits-default mb-2`} key={index}>{order.number}</li>)
                                 })}
                             </ul>
@@ -46,7 +46,7 @@ export const FeedPage = () => {
                         <div>
                             <h2 className="text text_type_main-medium">В работе:</h2>
                             <ul className={`${styles.list} ${styles.columns}`}>
-                                {orders.slice(0, 10).filter((order) => order.status === 'pending').map((order, index) => {
+                                {orders.slice(0, 20).filter((order) => order.status === 'pending').map((order, index) => {
                                     return (<li className="text text_type_digits-default mb-2" key={index}>{order.number}</li>)
                                 })}
                             </ul>

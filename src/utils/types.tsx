@@ -21,7 +21,7 @@ export type TConstructorIngredient = TIngredient & {
 export type TOrder = {
     ingredients: string[],
     _id: string,
-    status: 'done' | 'pending' | 'created',
+    status: 'done' | 'pending' | 'created' | 'canceled',
     number: number,
     createdAt: string,
     updatedAt: string,

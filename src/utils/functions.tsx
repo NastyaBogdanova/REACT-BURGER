@@ -12,3 +12,20 @@ export const totalPrice = (arr: TIngredient[]): number => {
         :
         0
 }
+
+export const translateStatusText = (status: string) => {
+    switch (status) {
+        case 'done': {
+            return <span style={{ color: `#00CCCC` }}>Выполнен</span>
+        }
+        case 'pending': {
+            return <span>Готовится</span>
+        }
+        case 'created': {
+            return <span>Создан</span>
+        }
+        default: {
+            return <span style={{ color: `red` }}>Отменён</span>
+        }
+    }
+}

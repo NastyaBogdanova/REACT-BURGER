@@ -5,6 +5,11 @@ import { RootState } from "../../services/types/index";
 
 const OrderDetails = () => {
     const { order } = useSelector((store: RootState) => store.order);
+
+    if (!order) {
+        return <h3 className="text text_type_main-medium mb-15">Идёт загрузка заказа...</h3>
+    }
+
     return (
         <div className={styles.container}>
             {order &&

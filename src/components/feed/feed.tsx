@@ -4,7 +4,7 @@ import styles from "./feed.module.css";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link } from 'react-router-dom';
 import { TOrders, TOrder, TIngredient } from '../../utils/types';
-import { prettierDate, totalPrice } from '../../utils/functions';
+import { prettierDate, totalPrice, translateStatusText } from '../../utils/functions';
 
 type TFeedImg = {
     index: number,
@@ -40,7 +40,9 @@ const FeedImg = ({ index, item, quantity }: TFeedImg) => {
     )
 }
 
-export const FeedItem = ({ order }: { order: TOrder }) => {
+export const FeedItem = (orderItem: { orderItem: TOrder }) => {
+
+    const order = orderItem.orderItem;
 
     const location = useLocation();
     const feedLocation = "/feed";
@@ -65,6 +67,7 @@ export const FeedItem = ({ order }: { order: TOrder }) => {
                 <p className="text text_type_main-default text_color_inactive">{prettierDate(order.createdAt)}</p>
             </div>
             <h3 className="text text_type_main-medium mt-6">{order.name}</h3>
+            <div className="text text_type_main-small mt-1">{translateStatusText(order.status)}</div>
             <div className={`${styles.info} mt-6`}>
                 <div className={styles.ingredients}>
                     {order.ingredients.length <= 6 ?
@@ -88,11 +91,18 @@ export const FeedItem = ({ order }: { order: TOrder }) => {
     )
 }
 
-export const Feed = ({ orders }: TOrders) => {
+export const Feed = () => {
+
+    const { orders } = useSelector(store => store.ws);
+
+    if (!orders) {
+        return <h1 className="text text_type_main-medium">Идёт загрузка заказов...</h1>
+    }
+
     return (
         <div className={`${styles.box} custom-scroll`}>
             {orders.map((item: TOrder, index: number) =>
-                <FeedItem order={item} key={index} />
+                <FeedItem orderItem={item} key={index} />
             )}
         </div>
     )

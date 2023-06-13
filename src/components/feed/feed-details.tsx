@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import styles from "./feed.module.css";
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { TOrder, TIngredient } from '../../utils/types';
-import { prettierDate, totalPrice } from '../../utils/functions';
+import { prettierDate, totalPrice, translateStatusText } from '../../utils/functions';
 
 export const FeedDetails = () => {
     const { orders } = useSelector(store => store.ws);
+
     const { ingredients } = useSelector(store => store.ingredients);
 
     const { id } = useParams<string>();
@@ -36,28 +37,11 @@ export const FeedDetails = () => {
         }
     }
 
-    const translateStatusText = (status: string) => {
-        switch (status) {
-            case 'done': {
-                return 'Выполнен';
-            }
-            case 'pending': {
-                return 'в работе';
-            }
-            case 'created': {
-                return 'Создан';
-            }
-            default: {
-                return 'Отменён';
-            }
-        }
-    }
-
     return (
         <>
             <p className={`text text_type_digits-default`}>#{order.number}</p>
             <h1 className="text text_type_main-medium mt-5">{order.name}</h1>
-            <span className={`${styles.blue} text text_type_main-small mt-3`}>{translateStatusText(order.status)}</span>
+            <div className="text text_type_main-small">{translateStatusText(order.status)}</div>
             <p className="text text_type_main-medium mt-5">Состав:</p>
             <ul className={`${styles.stuffings} ${styles.list} custom-scroll`}>
                 {orderIngredientsSet.map((ingredient: TIngredient, i: number) =>

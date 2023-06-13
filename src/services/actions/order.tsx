@@ -1,6 +1,7 @@
 import { request } from "../../utils/api";
 import { AppThunk } from "../types/index";
 import { TConstructorIngredient } from "../../utils/types";
+import { getCookie } from 'typescript-cookie';
 
 export const SEND_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
@@ -50,10 +51,12 @@ const sendOrderFaild = (): TSendOrderFaild => {
 };
 
 export const sendOrder: AppThunk = (ingredients: TConstructorIngredient[]) => {
+    let authToken = getCookie('token');
     const options = {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: 'Bearer ' + authToken
         },
         body: JSON.stringify({ ingredients })
     }
