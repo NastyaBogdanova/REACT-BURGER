@@ -20,7 +20,7 @@ export const FeedItem = (orderItem: { orderItem: TOrder }) => {
 
     if (ingredients) {
         order.ingredients.map(orderIngredient => {
-            let elem: TIngredient | undefined = ingredients.find(ingredient => ingredient?._id === orderIngredient);
+            let elem = ingredients.find(ingredient => ingredient?._id === orderIngredient);
             if (elem) {
                 orderIngredients.push(elem);
             }
@@ -38,12 +38,12 @@ export const FeedItem = (orderItem: { orderItem: TOrder }) => {
             <div className={`${styles.info} mt-6`}>
                 <div className={styles.ingredients}>
                     {order.ingredients.length <= 6 ?
-                        order.ingredients.map((item: string, i: number) =>
+                        order.ingredients.map((item, i) =>
                             <FeedImg index={order.ingredients.length - i} item={item} key={i} />
                         )
                         :
                         <>
-                            {order.ingredients.slice(0, 5).map((item: string, i: number) =>
+                            {order.ingredients.slice(0, 5).map((item, i) =>
                                 <FeedImg index={6 - i} item={item} key={i} />)}
                             <FeedImg index={0} item={order.ingredients[5]} quantity={order.ingredients.length - 5} />
                         </>

@@ -7,14 +7,13 @@ import { DraggableElement } from './draggable-element/draggable-element';
 import OrderBox from './order-box/order-box';
 import EmptyElement from './empty-element/empty-element';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RootState } from "../../services/types/index";
-import { TIngredient, TConstructorIngredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const { bun, stuffings } = useSelector((store: RootState) => store.constructor);
+    const { bun, stuffings } = useSelector(store => store.constructor);
 
     const handleDrop = useCallback((item: TIngredient): void => {
         if (item.type === "bun") {
@@ -51,7 +50,7 @@ const BurgerConstructor = () => {
                 <div className={`${styles.customScroll} custom-scroll`}>
                     {stuffings !== undefined && stuffings.length !== 0 ?
                         <>
-                            {stuffings.map((item: TConstructorIngredient, index: number) =>
+                            {stuffings.map((item, index) =>
                                 <DraggableElement key={item.id} elem={item} index={index} />
                             )}
                         </>

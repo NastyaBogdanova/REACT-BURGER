@@ -7,11 +7,10 @@ import BurgerConstructor from "../components/burger-constructor/burger-construct
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RootState } from "../services/types/index";
 
 export const HomePage = () => {
 
-    const { ingredients, request, failed } = useSelector((store: RootState) => store.ingredients);
+    const { ingredients, request, failed } = useSelector(store => store.ingredients);
 
     const navigate = useNavigate();
     const location = useLocation();

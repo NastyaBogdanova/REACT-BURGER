@@ -1,8 +1,7 @@
 import styles from "./app-header.module.css";
-import { NavLink, useMatch, Outlet } from 'react-router-dom';
+import { NavLink, useMatch, Outlet, Link } from 'react-router-dom';
 import { useSelector } from "../../services/types/hooks";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RootState } from "../../services/types/index";
 
 const AppHeader = () => {
 
@@ -10,7 +9,7 @@ const AppHeader = () => {
     const isFeed = useMatch("/feed");
     const isProfile = useMatch("/profile");
 
-    const userName = useSelector((store: RootState) => store.user.user?.name);
+    const userName = useSelector(store => store.user.user?.name);
 
     return (
         <>
@@ -26,9 +25,9 @@ const AppHeader = () => {
                             Лента заказов
                         </NavLink>
                     </nav>
-                    <div className={styles.logo}>
+                    <Link to={'/'} className={styles.logo}>
                         <Logo />
-                    </div>
+                    </Link>
                     <NavLink to={'/profile'} className={({ isActive }) => (isActive ? `${styles.link} text text_type_main-default text_color_primary pl-5 pb-4 pt-4` : `${styles.link} text text_type_main-default text_color_inactive pl-5 pb-4 pt-4`)}>
                         <ProfileIcon type={isProfile ? "primary" : "secondary"} />
                         {userName ? userName : "Личный кабинет"}

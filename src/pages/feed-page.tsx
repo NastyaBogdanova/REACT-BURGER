@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./feed-page.module.css";
@@ -38,16 +38,16 @@ export const FeedPage = () => {
                         <div>
                             <h2 className="text text_type_main-medium">Готовы:</h2>
                             <ul className={`${styles.list} ${styles.columns}`}>
-                                {orders.slice(0, 20).filter((order) => order.status === 'done').map((order, index) => {
-                                    return (<li className={`${styles.blue} text text_type_digits-default mb-2`} key={index}>{order.number}</li>)
+                                {orders.slice(0, 20).filter((order) => order.status === 'done').map((order) => {
+                                    return (<li className={`${styles.blue} text text_type_digits-default mb-2`} key={order._id}>{order.number}</li>)
                                 })}
                             </ul>
                         </div>
                         <div>
                             <h2 className="text text_type_main-medium">В работе:</h2>
                             <ul className={`${styles.list} ${styles.columns}`}>
-                                {orders.slice(0, 20).filter((order) => order.status === 'pending').map((order, index) => {
-                                    return (<li className="text text_type_digits-default mb-2" key={index}>{order.number}</li>)
+                                {orders.slice(0, 20).filter((order) => order.status === 'pending').map((order) => {
+                                    return (<li className="text text_type_digits-default mb-2" key={order._id}>{order.number}</li>)
                                 })}
                             </ul>
                         </div>

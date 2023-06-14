@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUser } from '../services/actions/user';
-import { RootState } from "../services/types/index";
 
 export const RegisterPage = () => {
 
-    const { registerFailed } = useSelector((store: RootState) => store.user);
+    const { registerFailed } = useSelector(store => store.user);
 
     const [name, setName] = React.useState("");
     const [mail, setMail] = React.useState("");

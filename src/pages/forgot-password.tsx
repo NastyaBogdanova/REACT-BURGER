@@ -4,11 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from "./form.module.css";
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from '../services/actions/password';
-import { RootState } from "../services/types/index";
 
 export const ForgotPasswordPage = () => {
 
-    const { forgotPasswordFailed, forgotPasswordSuccess } = useSelector((store: RootState) => store.password);
+    const { forgotPasswordFailed, forgotPasswordSuccess } = useSelector(store => store.password);
 
     const [mail, setMail] = React.useState("");
 

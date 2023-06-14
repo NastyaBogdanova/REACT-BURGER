@@ -2,7 +2,6 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "../../services/types/hooks";
 import { getUser } from '../../services/actions/user';
-import { RootState } from "../../services/types/index";
 
 export const ProtectedRouteElement = ({ element, onlyForUnauth }: TProtectedRouteElement) => {
 
@@ -13,7 +12,7 @@ export const ProtectedRouteElement = ({ element, onlyForUnauth }: TProtectedRout
         dispatch(getUser());
     }, []);
 
-    const { loggedIn } = useSelector((store: RootState) => store.user);
+    const { loggedIn } = useSelector(store => store.user);
 
     if (onlyForUnauth && !loggedIn) {
         return element;

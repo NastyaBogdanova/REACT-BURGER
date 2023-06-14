@@ -1,10 +1,9 @@
 import styles from "./order-details.module.css";
 import doneImagePath from '../../images/done.svg';
 import { useSelector } from '../../services/types/hooks';
-import { RootState } from "../../services/types/index";
 
 const OrderDetails = () => {
-    const { order } = useSelector((store: RootState) => store.order);
+    const { order } = useSelector(store => store.order);
 
     if (!order) {
         return <h3 className="text text_type_main-medium mb-15">Идёт загрузка заказа...</h3>

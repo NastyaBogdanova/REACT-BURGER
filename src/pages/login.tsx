@@ -4,11 +4,10 @@ import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../services/actions/user';
-import { RootState } from "../services/types/index";
 
 export const LoginPage = () => {
 
-    const { loginFailed } = useSelector((store: RootState) => store.user);
+    const { loginFailed } = useSelector(store => store.user);
 
     const [mail, setMail] = React.useState("");
     const [password, setPassword] = React.useState("");

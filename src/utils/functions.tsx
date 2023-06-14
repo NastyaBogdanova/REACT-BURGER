@@ -8,7 +8,7 @@ export const prettierDate = (date: string) => {
 
 export const totalPrice = (arr: TIngredient[]): number => {
     return arr ?
-        arr.reduce((sum: number, item: TIngredient) => sum + item.price, 0)
+        arr.reduce((sum, item) => sum + item.price, 0)
         :
         0
 }

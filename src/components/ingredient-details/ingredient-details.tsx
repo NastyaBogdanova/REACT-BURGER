@@ -1,14 +1,12 @@
 import styles from "./ingredient-details.module.css";
 import { useParams } from 'react-router-dom';
 import { useSelector } from "../../services/types/hooks";
-import { RootState } from "../../services/types/index";
-import { TIngredient } from "../../utils/types";
 
 const IngredientDetails = () => {
-    const { ingredients, request, failed } = useSelector((store: RootState) => store.ingredients);
+    const { ingredients, request, failed } = useSelector(store => store.ingredients);
     const { id } = useParams<string>();
 
-    const ingredient = ingredients.find((item: TIngredient) => item._id === id);
+    const ingredient = ingredients.find((item) => item._id === id);
 
     if (!ingredient && request) {
         return <h1 className="text text_type_main-large m-25">Идёт загрузка ингридиента...</h1>

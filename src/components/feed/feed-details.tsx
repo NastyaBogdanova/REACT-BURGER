@@ -43,8 +43,8 @@ export const FeedDetails = ({ orders }: TOrders) => {
             <div className="text text_type_main-small mt-2">{translateStatusText(order.status)}</div>
             <p className="text text_type_main-medium mt-15">Состав:</p>
             <ul className={`${styles.stuffings} ${styles.list} custom-scroll`}>
-                {orderIngredientsSet.map((ingredient: TIngredient, i: number) =>
-                    <li className={`${styles.ingredient} pr-6 mb-4`} key={i}>
+                {orderIngredientsSet.map((ingredient) =>
+                    <li className={`${styles.ingredient} pr-6 mb-4`} key={ingredient._id}>
                         <div className={styles.info}>
                             <img className={styles.circle} src={ingredient.image} alt="" />
                             <h2 className="text text_type_main-small ml-4">{ingredient.name}</h2>

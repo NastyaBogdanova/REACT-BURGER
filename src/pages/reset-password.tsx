@@ -4,11 +4,10 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../services/actions/password';
-import { RootState } from "../services/types/index";
 
 export const ResetPasswordPage = () => {
 
-    const { resetPasswordFailed, resetPasswordSuccess } = useSelector((store: RootState) => store.password);
+    const { resetPasswordFailed, resetPasswordSuccess } = useSelector(store => store.password);
 
     const [password, setPassword] = React.useState("");
     const [code, setCode] = React.useState("");

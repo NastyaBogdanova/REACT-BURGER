@@ -3,13 +3,12 @@ import { useSelector, useDispatch } from "../../services/types/hooks";
 import styles from "./profile-right.module.css";
 import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { editUser } from '../../services/actions/user';
-import { RootState } from "../../services/types/index";
 
 export const ProfileInfo = () => {
 
     const dispatch = useDispatch();
 
-    const { user, editUserFailed, editUserSuccess } = useSelector((store: RootState) => store.user);
+    const { user, editUserFailed, editUserSuccess } = useSelector(store => store.user);
 
     const [name, setName] = React.useState(user.name);
     const [mail, setMail] = React.useState(user.email);

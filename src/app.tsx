@@ -39,14 +39,17 @@ const App = () => {
                 <Route path="/login" element={<ProtectedRouteElement onlyForUnauth={true} element={<LoginPage />} />} />
                 <Route path="/forgot-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ForgotPasswordPage />} />} />
                 <Route path="/reset-password" element={<ProtectedRouteElement onlyForUnauth={true} element={<ResetPasswordPage />} />} />
-                <Route path="*" element={<NotFound />} />
+                {location.state == null &&
+                    <Route path="/profile/orders/:id" element={<ProtectedRouteElement onlyForUnauth={false} element={<OrderDetailsPage />} />} />
+                }
                 <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfilePage />} />} >
                     <Route path="/profile" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfileInfo />} />} />
                     <Route path="/profile/orders" element={<ProtectedRouteElement onlyForUnauth={false} element={<ProfileOrders />} />} />
+                    <Route path="/profile/orders/:id" element={<ProtectedRouteElement onlyForUnauth={false} element={location.state?.backgroundLocation && <ProfileOrders />} />} />
                 </Route>
-                <Route path="/profile/orders/:id" element={<ProtectedRouteElement onlyForUnauth={false} element={location.state?.backgroundLocation ? <ProfilePage /> : <OrderDetailsPage />} />} />
                 <Route path="/feed" element={<FeedPage />} />
                 <Route path="/feed/:id" element={location.state?.backgroundLocation ? <FeedPage /> : <FeedDetailsPage />} />
+                <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
     )
