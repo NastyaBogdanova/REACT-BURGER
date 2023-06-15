@@ -1,16 +1,15 @@
 import styles from "../burger-ingredients.module.css";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/types/hooks';
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from 'react-router-dom';
-import { RootState } from "../../../utils/types";
-import { TIngredient, TConstructorIngredient } from "../../../utils/types";
+import { TIngredient } from "../../../utils/types";
 
 const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
 
     const location = useLocation();
 
-    const { bun, stuffings } = useSelector((store: RootState) => store.constructor);
+    const { bun, stuffings } = useSelector(store => store.constructor);
 
     const ingredients = () => {
         if (bun || stuffings) {

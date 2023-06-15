@@ -1,21 +1,20 @@
 import styles from "./ingredient-details.module.css";
 import { useParams } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { RootState, TIngredient } from "../../utils/types";
+import { useSelector } from "../../services/types/hooks";
 
 const IngredientDetails = () => {
-    const { ingredients, request, failed } = useSelector((store: RootState) => store.ingredients);
+    const { ingredients, request, failed } = useSelector(store => store.ingredients);
     const { id } = useParams<string>();
 
-    if (ingredients === undefined && request) {
+    const ingredient = ingredients.find((item) => item._id === id);
+
+    if (!ingredient && request) {
         return <h1 className="text text_type_main-large m-25">Идёт загрузка ингридиента...</h1>
-    } else if (ingredients === undefined && failed) {
+    } else if (!ingredient && failed) {
         return <h1 className="text text_type_main-large m-25">Произошла ошибка при загрузке ингридиента!</h1>
-    } else if (ingredients === undefined) {
+    } else if (!ingredient) {
         return <h1 className="text text_type_main-large m-25">Что-то пошло не так</h1>
     }
-
-    const ingredient: TIngredient = ingredients.find((item: TIngredient) => item._id === id);
 
     return (
         <div className={styles.container}>

@@ -1,8 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { getUser } from '../../services/actions/user';
-import { RootState } from "../../utils/types";
 
 export const ProtectedRouteElement = ({ element, onlyForUnauth }: TProtectedRouteElement) => {
 
@@ -10,11 +9,10 @@ export const ProtectedRouteElement = ({ element, onlyForUnauth }: TProtectedRout
     const location = useLocation();
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getUser());
     }, []);
 
-    const { loggedIn } = useSelector((store: RootState) => store.user);
+    const { loggedIn } = useSelector(store => store.user);
 
     if (onlyForUnauth && !loggedIn) {
         return element;

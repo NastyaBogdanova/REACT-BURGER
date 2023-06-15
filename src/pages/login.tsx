@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./form.module.css";
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../services/actions/user';
-import { RootState } from "../utils/types";
 
 export const LoginPage = () => {
 
-    const { loginFailed } = useSelector((store: RootState) => store.user);
+    const { loginFailed } = useSelector(store => store.user);
 
     const [mail, setMail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -17,7 +16,6 @@ export const LoginPage = () => {
 
     const submit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(loginUser(mail, password));
     };
 

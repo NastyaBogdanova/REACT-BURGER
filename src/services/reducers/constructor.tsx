@@ -1,11 +1,17 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN, UPDATE_INGREDIENTS, RESET_INGREDIENTS } from "../actions/constructor";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN, UPDATE_INGREDIENTS, RESET_INGREDIENTS, TConstructorActions } from "../actions/constructor";
+import { TIngredient, TConstructorIngredient } from "../../utils/types";
 
-const initialState = {
+type TConstructorState = {
+    stuffings: Array<TConstructorIngredient>,
+    bun: null | TIngredient,
+}
+
+const initialState: TConstructorState = {
     stuffings: [],
     bun: null,
 }
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: TConstructorActions): TConstructorState => {
     switch (action.type) {
         case ADD_BUN: {
             return {
@@ -19,7 +25,7 @@ export const constructorReducer = (state = initialState, action) => {
                 stuffings: [
                     ...(state.stuffings || []),
                     //...state.stuffings, это должно работать, но почему-то не работает
-                    action.payload
+                    { ...action.item }
                 ]
             }
         }

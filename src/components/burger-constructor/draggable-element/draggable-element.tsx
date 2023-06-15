@@ -1,22 +1,23 @@
 import { useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/types/hooks';
 import { useDrag, useDrop, XYCoord } from 'react-dnd';
 import styles from "../burger-constructor.module.css";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import update from 'immutability-helper';
 import { updateIngredients, deleteIngredient } from '../../../services/actions/constructor';
-import { RootState, TConstructorIngredient } from "../../../utils/types";
+import { TConstructorIngredient } from "../../../utils/types";
 import { Identifier } from 'dnd-core';
 
 export const DraggableElement = ({ elem, index }: TDraggableElement) => {
 
-    const { stuffings } = useSelector((store: RootState) => store.constructor);
+    const { stuffings } = useSelector(store => store.constructor);
 
     const dispatch = useDispatch();
 
     const id: string = elem.id;
 
-    const ref = useRef<HTMLDivElement>(null)
+    const ref = useRef<HTMLDivElement>(null);
+
     const [{ handlerId }, drop] = useDrop<TItem, void, { handlerId: Identifier | null }>({
         accept: 'constuctorIngredient',
         collect(monitor) {
@@ -47,7 +48,8 @@ export const DraggableElement = ({ elem, index }: TDraggableElement) => {
             moveElement(dragIndex, hoverIndex)
             item.index = hoverIndex
         },
-    })
+    });
+
     const [{ isDragging }, drag] = useDrag({
         type: 'constuctorIngredient',
         item: () => {
@@ -56,8 +58,10 @@ export const DraggableElement = ({ elem, index }: TDraggableElement) => {
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
-    })
-    const opacity = isDragging ? 0 : 1
+    });
+
+    const opacity = isDragging ? 0 : 1;
+
     drag(drop(ref));
 
     const moveElement = useCallback((dragIndex: number, hoverIndex: number): void => {
@@ -68,11 +72,11 @@ export const DraggableElement = ({ elem, index }: TDraggableElement) => {
             ],
         })
         dispatch(updateIngredients(updatedElements));
-    }, [stuffings, dispatch])
+    }, [stuffings, dispatch]);
 
     const deleteElement = (id: string): void => {
         dispatch(deleteIngredient(id));
-    }
+    };
 
     return (
         <div ref={ref} style={{ opacity }} data-handler-id={handlerId} className={`${styles.item}`}>

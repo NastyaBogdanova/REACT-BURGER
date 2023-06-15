@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/types/hooks';
 import styles from "../burger-constructor.module.css";
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
@@ -7,23 +7,21 @@ import { resetIngredients } from '../../../services/actions/constructor';
 import { sendOrder } from '../../../services/actions/order';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from "../../../utils/types";
-import { TConstructorIngredient } from "../../../utils/types";
 
 const OrderBox = () => {
 
     const [isModalOpen, setModalOpen] = React.useState(false);
 
-    const { bun, stuffings } = useSelector((store: RootState) => store.constructor);
-    const { loggedIn } = useSelector((store: RootState) => store.user);
-    const { failed } = useSelector((store: RootState) => store.order);
+    const { bun, stuffings } = useSelector(store => store.constructor);
+    const { loggedIn } = useSelector(store => store.user);
+    const { failed } = useSelector(store => store.order);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const totalPrice = useMemo((): number => {
         if (stuffings || bun) {
-            return (stuffings ? stuffings.reduce((sum: number, item: TConstructorIngredient) => sum + item.price, 0) : 0) + (bun ? bun.price * 2 : 0);
+            return (stuffings ? stuffings.reduce((sum, item) => sum + item.price, 0) : 0) + (bun ? bun.price * 2 : 0);
         } else {
             return 0;
         }
@@ -35,9 +33,8 @@ const OrderBox = () => {
     };
 
     const submit = (): void => {
-        if (loggedIn) {
-            const ingredientsId: string[] = [bun, ...stuffings, bun].map(item => item._id);
-            //@ts-ignore
+        if (loggedIn && stuffings && bun) {
+            const ingredientsId = [bun, ...stuffings, bun].map(item => item._id);
             dispatch(sendOrder(ingredientsId));
             setModalOpen(true);
         } else {

@@ -1,15 +1,19 @@
 import styles from "./order-details.module.css";
 import doneImagePath from '../../images/done.svg';
-import { useSelector } from 'react-redux';
-import { RootState } from "../../utils/types";
+import { useSelector } from '../../services/types/hooks';
 
 const OrderDetails = () => {
-    const { order } = useSelector((store: RootState) => store.order);
+    const { order } = useSelector(store => store.order);
+
+    if (!order) {
+        return <h3 className="text text_type_main-medium mb-15">Идёт загрузка заказа...</h3>
+    }
+
     return (
         <div className={styles.container}>
             {order &&
                 <>
-                    <span className="text text_type_digits-large mb-8">{order.number}</span>
+                    <span className={`${styles.shadow} text text_type_digits-large mb-8`}>{order.order.number}</span>
                     <h3 className="text text_type_main-medium mb-15">идентификатор заказа</h3>
                     <div className={`${styles.pic} mb-15`}>
                         <img src={doneImagePath} alt="" />

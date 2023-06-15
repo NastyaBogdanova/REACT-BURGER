@@ -1,56 +1,37 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "../services/types/hooks";
 import styles from "./profile.module.css";
-import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { logOutUser, editUser } from '../services/actions/user';
-import { RootState } from "../utils/types";
+import { logOutUser } from '../services/actions/user';
+import { FeedDetails } from "../components/feed/feed-details";
+import Modal from "../components/modal/modal";
+import { wsConnectionProfileStart, wsConnectionProfileClosed } from "../services/actions/webSocketProfile";
+import { getCookie } from 'typescript-cookie';
 
 export const ProfilePage = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const { logOutFailed, user, editUserFailed, editUserSuccess } = useSelector((store: RootState) => store.user);
+    const { logOutFailed } = useSelector(store => store.user);
+    const { ordersProfile } = useSelector(store => store.wsProfile);
 
-    const [name, setName] = React.useState(user.name);
-    const [mail, setMail] = React.useState(user.email);
-    const [password, setPassword] = React.useState('');
-
-    const [isInputChanged, setisInputChanged] = React.useState(false);
-
-    const cancelEdit = (): void => {
-        if (user) {
-            setName(user.name);
-            setMail(user.email);
-            setPassword('');
-            setisInputChanged(false);
-        }
-    }
     const logOut = (e: React.MouseEvent<HTMLAnchorElement>): void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(logOutUser());
     };
 
-    const onNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setName(e.target.value);
-        setisInputChanged(true);
-    };
-    const onMailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setMail(e.target.value);
-        setisInputChanged(true);
-    };
-    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setPassword(e.target.value);
-        setisInputChanged(true);
-    };
+    const handleCloseModal = (): void => {
+        navigate("/profile/orders");
+    }
 
-    const submit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-        //@ts-ignore
-        dispatch(editUser(mail, name, password));
-        setisInputChanged(false);
-    };
+    useEffect(() => {
+        dispatch(wsConnectionProfileStart(`?token=${getCookie('token')}`));
+        return () => {
+            dispatch(wsConnectionProfileClosed());
+        }
+    }, []);
 
     return (
         <div className={styles.background}>
@@ -58,7 +39,7 @@ export const ProfilePage = () => {
                 <div className={styles.box}>
                     <div className={styles.leftbox}>
                         <nav className={styles.nav}>
-                            <NavLink to='/profile' className={({ isActive }) => (isActive ? `${styles.button} text_color_primary text text_type_main-large` : `${styles.button} text text_type_main-large text_color_inactive`)}>Профиль</NavLink>
+                            <NavLink to='/profile' end className={({ isActive }) => (isActive ? `${styles.button} text_color_primary text text_type_main-large` : `${styles.button} text text_type_main-large text_color_inactive`)}>Профиль</NavLink>
                             <NavLink to='/profile/orders' className={({ isActive }) => (isActive ? `${styles.button} text_color_primary text text_type_main-large` : `${styles.button} text text_type_main-large text_color_inactive`)}>История заказов</NavLink>
                             <a className={`${styles.button} text text_type_main-large text_color_inactive`} onClick={logOut}>Выход</a>
                         </nav>
@@ -67,50 +48,14 @@ export const ProfilePage = () => {
                         }
                         <span className="text text_type_main-small text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</span>
                     </div>
-                    <form className={styles.info} onSubmit={submit}>
-                        <Input
-                            type={'text'}
-                            placeholder={'Имя'}
-                            onChange={onNameChange}
-                            icon={'EditIcon'}
-                            value={name}
-                            name={'name'}
-                            size={'default'}
-                            extraClass="mb-6"
-                        />
-                        <EmailInput
-                            onChange={onMailChange}
-                            value={mail}
-                            name={'email'}
-                            placeholder="Логин"
-                            isIcon={true}
-                            extraClass="mb-6"
-                        />
-                        <PasswordInput
-                            onChange={onPasswordChange}
-                            value={password}
-                            name={'password'}
-                            icon="EditIcon"
-                        />
-                        {editUserFailed &&
-                            <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка при сохранении данных, попробуйте ещё раз.</span>
-                        }
-                        {editUserSuccess &&
-                            <span className={`${styles.success} text text_type_main-small mt-2`}>Ваши данные успешно изменены.</span>
-                        }
-                        {isInputChanged &&
-                            <div className={styles.buttons}>
-                                <Button htmlType="button" type="secondary" size="medium" onClick={cancelEdit}>
-                                    Отмена
-                                </Button>
-                                <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">
-                                    Сохранить
-                                </Button>
-                            </div>
-                        }
-                    </form>
+                    <Outlet />
                 </div>
             </div>
+            {location.state?.backgroundLocation &&
+                <Modal onClose={handleCloseModal} title="">
+                    <FeedDetails orders={ordersProfile} />
+                </Modal>
+            }
         </div>
     )
 }

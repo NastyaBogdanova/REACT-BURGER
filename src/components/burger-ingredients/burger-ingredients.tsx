@@ -3,8 +3,7 @@ import styles from "./burger-ingredients.module.css";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
-import { useSelector } from 'react-redux';
-import { RootState, TIngredient } from "../../utils/types";
+import { useSelector } from '../../services/types/hooks';
 
 const BurgerIngredients = () => {
     const [current, setCurrent] = React.useState('Булки');
@@ -17,7 +16,7 @@ const BurgerIngredients = () => {
     const mainsRef = useRef<HTMLHeadingElement>(null);
     const saucesRef = useRef<HTMLHeadingElement>(null);
 
-    const { ingredients } = useSelector((store: RootState) => store.ingredients);
+    const { ingredients } = useSelector(store => store.ingredients);
 
     useEffect((): void => {
         if (inViewBuns) {
@@ -51,7 +50,7 @@ const BurgerIngredients = () => {
                 <div id="Булки" ref={bunRef}>
                     <h2 className="text text_type_main-medium" ref={bunsRef}>Булки</h2>
                     <ol className={`${styles.list} pl-4 pr-4 pb-10 pt-6`}>
-                        {ingredients.filter((item: TIngredient) => item.type == "bun").map((item: TIngredient) =>
+                        {ingredients.filter((item) => item.type == "bun").map((item) =>
                             <BurgerIngredient ingredient={item} key={item._id} />
                         )}
                     </ol>
@@ -59,7 +58,7 @@ const BurgerIngredients = () => {
                 <div id="Соусы" ref={sauceRef}>
                     <h2 className="text text_type_main-medium" ref={saucesRef}>Соусы</h2>
                     <ol className={`${styles.list} pl-4 pr-4 pb-10 pt-6`}>
-                        {ingredients.filter((item: TIngredient) => item.type == "sauce").map((item: TIngredient) =>
+                        {ingredients.filter((item) => item.type == "sauce").map((item) =>
                             <BurgerIngredient ingredient={item} key={item._id} />
                         )}
                     </ol>
@@ -67,7 +66,7 @@ const BurgerIngredients = () => {
                 <div id="Начинки" ref={mainRef}>
                     <h2 className="text text_type_main-medium" ref={mainsRef}>Начинки</h2>
                     <ol className={`${styles.list} pl-4 pr-4 pb-10 pt-6`}>
-                        {ingredients.filter((item: TIngredient) => item.type == "main").map((item: TIngredient) =>
+                        {ingredients.filter((item) => item.type == "main").map((item) =>
                             <BurgerIngredient ingredient={item} key={item._id} />
                         )}
                     </ol>
