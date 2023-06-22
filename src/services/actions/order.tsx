@@ -1,7 +1,7 @@
 import { request, getNewToken } from "../../utils/api";
 import { AppThunk } from "../types/index";
 import { TConstructorIngredient } from "../../utils/types";
-import { getCookie } from 'typescript-cookie';
+import { getCookie } from '../../utils/cookie';
 
 export const SEND_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';

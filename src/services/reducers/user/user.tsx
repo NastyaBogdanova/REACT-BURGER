@@ -5,7 +5,7 @@ import {
     GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED,
     EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILED,
     TUser, TUserActions
-} from "../actions/user";
+} from "../../actions/user";
 
 type TUserState = {
     user: TUser,

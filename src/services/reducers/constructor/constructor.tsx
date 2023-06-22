@@ -1,5 +1,5 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN, UPDATE_INGREDIENTS, RESET_INGREDIENTS, TConstructorActions } from "../actions/constructor";
-import { TIngredient, TConstructorIngredient } from "../../utils/types";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN, UPDATE_INGREDIENTS, RESET_INGREDIENTS, TConstructorActions } from "../../actions/constructor";
+import { TIngredient, TConstructorIngredient } from "../../../utils/types";
 
 type TConstructorState = {
     stuffings: Array<TConstructorIngredient>,
@@ -23,8 +23,7 @@ export const constructorReducer = (state = initialState, action: TConstructorAct
             return {
                 ...state,
                 stuffings: [
-                    ...(state.stuffings || []),
-                    //...state.stuffings, это должно работать, но почему-то не работает
+                    ...state.stuffings || [], //это должно работать, но почему-то не работает
                     { ...action.item }
                 ]
             }

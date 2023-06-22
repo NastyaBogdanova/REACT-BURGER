@@ -1,4 +1,4 @@
-import { SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS, SEND_ORDER_FAILED, TOrderActions, TOrder } from "../actions/order";
+import { SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS, SEND_ORDER_FAILED, TOrderActions, TOrder } from "../../actions/order";
 
 type TOrderState = {
     request: boolean,

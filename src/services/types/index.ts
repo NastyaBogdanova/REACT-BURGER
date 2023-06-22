@@ -9,7 +9,7 @@ import { TWSActions } from '../actions/webSocketFeed';
 import { TWSProfileActions } from '../actions/webSocketProfile';
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { Action, ActionCreator } from 'redux';
+import { ActionCreator } from 'redux';
 
 export type RootState = ReturnType<typeof rootReducer>;
 

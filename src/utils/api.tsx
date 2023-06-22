@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from 'typescript-cookie';
+import { getCookie, setCookie } from '../utils/cookie';
 
 const api = 'https://norma.nomoreparties.space/api';
 

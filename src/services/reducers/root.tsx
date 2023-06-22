@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { ingredientsReducer } from './ingredients';
-import { constructorReducer } from './constructor';
-import { orderReducer } from './order';
-import { passwordReducer } from './password';
-import { userReducer } from './user';
-import { wsReducerFeed } from './webSocketFeed';
-import { wsReducerProfile } from './webSocketProfile';
+import { ingredientsReducer } from './ingredients/ingredients';
+import { constructorReducer } from './constructor/constructor';
+import { orderReducer } from './order/order';
+import { passwordReducer } from './password/password';
+import { userReducer } from './user/user';
+import { wsReducerFeed } from './websocket-feed/webSocketFeed';
+import { wsReducerProfile } from './websocket-profile/webSocketProfile';
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,

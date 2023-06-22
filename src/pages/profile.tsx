@@ -6,7 +6,7 @@ import { logOutUser } from '../services/actions/user';
 import { FeedDetails } from "../components/feed/feed-details";
 import Modal from "../components/modal/modal";
 import { wsConnectionProfileStart, wsConnectionProfileClosed } from "../services/actions/webSocketProfile";
-import { getCookie } from 'typescript-cookie';
+import { getCookie } from '../utils/cookie';
 
 export const ProfilePage = () => {
 
