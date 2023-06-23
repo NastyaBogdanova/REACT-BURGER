@@ -1,3 +1,5 @@
+import { TMessage } from "../../utils/types";
+
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
@@ -21,7 +23,7 @@ type TWsConnectionClosed = {
 }
 type TWsGetMessage = {
     readonly type: typeof WS_GET_MESSAGE;
-    readonly payload: any
+    readonly payload: TMessage
 }
 type TWsSendMessage = {
     readonly type: typeof WS_SEND_MESSAGE;
@@ -58,7 +60,7 @@ export const wsConnectionClosed = () => {
         type: WS_CONNECTION_CLOSED,
     };
 };
-export const wsGetMessage = (message: any) => {
+export const wsGetMessage = (message: TMessage) => {
     return {
         type: WS_GET_MESSAGE,
         payload: message

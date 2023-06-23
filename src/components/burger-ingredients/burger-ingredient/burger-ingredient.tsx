@@ -31,7 +31,13 @@ const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
     const count: number = counter();
 
     return (
-        <Link to={`/ingredients/${ingredient._id}`} state={{ backgroundLocation: location }} className={styles.item} ref={dragRef}>
+        <Link
+            to={`/ingredients/${ingredient._id}`}
+            state={{ backgroundLocation: location }}
+            className={styles.item}
+            ref={dragRef}
+            data-testid={"ingredient"}
+        >
             <img className={styles.pic} src={ingredient.image} alt={ingredient.name} />
             <p className={`${styles.price} text text_type_digits-default pb-1 pt-1`}>{ingredient.price}&nbsp;<CurrencyIcon type="primary" /></p>
             <h3 className="text text_type_main-default">{ingredient.name}</h3>

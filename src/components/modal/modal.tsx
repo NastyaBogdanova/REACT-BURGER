@@ -26,7 +26,7 @@ const Modal: React.FC<TModal> = ({ onClose, title, children }) => {
                 <div className={styles.modal}>
                     <div className={styles.header}>
                         <h2 className={`${styles.title} text_type_main-large`}>{title}</h2>
-                        <button className={`${styles.close} close-button`} onClick={onClose}>
+                        <button className={`${styles.close} close-button`} onClick={onClose} data-testid="close">
                             <CloseIcon type="primary" />
                         </button>
                     </div>
