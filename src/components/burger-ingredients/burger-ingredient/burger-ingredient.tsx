@@ -36,7 +36,7 @@ const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
             state={{ backgroundLocation: location }}
             className={styles.item}
             ref={dragRef}
-            data-testid={"ingredient"}
+            data-testid={`ingredient-${ingredient.type}`}
         >
             <img className={styles.pic} src={ingredient.image} alt={ingredient.name} />
             <p className={`${styles.price} text text_type_digits-default pb-1 pt-1`}>{ingredient.price}&nbsp;<CurrencyIcon type="primary" /></p>

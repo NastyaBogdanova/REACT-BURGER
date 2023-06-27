@@ -33,7 +33,7 @@ const BurgerConstructor = () => {
 
     return (
         <div className={`${styles.container} mb-10 mt-25`}>
-            <div className={styles.basket} ref={dropTarget}>
+            <div className={styles.basket} ref={dropTarget} data-testid="dropTarget">
                 <div className={`${styles.item}`}>
                     {bun ?
                         <ConstructorElement

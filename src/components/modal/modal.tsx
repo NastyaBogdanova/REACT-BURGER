@@ -21,7 +21,7 @@ const Modal: React.FC<TModal> = ({ onClose, title, children }) => {
 
     return (
         PortalReactDOM.createPortal(
-            <div>
+            <div data-testid="modal">
                 <ModalOverlay close={onClose} />
                 <div className={styles.modal}>
                     <div className={styles.header}>
