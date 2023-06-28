@@ -1,18 +1,9 @@
-import { passwordReducer } from './password';
+import { passwordReducer, initialState } from './password';
 import * as actions from '../../actions/password';
 
 describe('passwordReducer', () => {
     it('should return the initial state', () => {
-        expect(passwordReducer(undefined, {})).toEqual(
-            {
-                forgotPasswordRequest: false,
-                forgotPasswordFailed: false,
-                forgotPasswordSuccess: false,
-                resetPasswordRequest: false,
-                resetPasswordFailed: false,
-                resetPasswordSuccess: false
-            }
-        )
+        expect(passwordReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle FORGOT_PASSWORD_REQUEST', () => {
@@ -21,12 +12,8 @@ describe('passwordReducer', () => {
         })
         ).toEqual(
             {
+                ...initialState,
                 forgotPasswordRequest: true,
-                forgotPasswordFailed: false,
-                forgotPasswordSuccess: false,
-                resetPasswordRequest: false,
-                resetPasswordFailed: false,
-                resetPasswordSuccess: false
             }
         )
     })
@@ -37,12 +24,8 @@ describe('passwordReducer', () => {
         })
         ).toEqual(
             {
-                forgotPasswordRequest: false,
-                forgotPasswordFailed: false,
+                ...initialState,
                 forgotPasswordSuccess: true,
-                resetPasswordRequest: false,
-                resetPasswordFailed: false,
-                resetPasswordSuccess: false
             }
         )
     })
@@ -54,12 +37,8 @@ describe('passwordReducer', () => {
             })
         ).toEqual(
             {
-                forgotPasswordRequest: false,
+                ...initialState,
                 forgotPasswordFailed: true,
-                forgotPasswordSuccess: false,
-                resetPasswordRequest: false,
-                resetPasswordFailed: false,
-                resetPasswordSuccess: false
             }
         )
     })
@@ -70,12 +49,8 @@ describe('passwordReducer', () => {
         })
         ).toEqual(
             {
-                forgotPasswordRequest: false,
-                forgotPasswordFailed: false,
-                forgotPasswordSuccess: false,
+                ...initialState,
                 resetPasswordRequest: true,
-                resetPasswordFailed: false,
-                resetPasswordSuccess: false
             }
         )
     })
@@ -86,11 +61,7 @@ describe('passwordReducer', () => {
         })
         ).toEqual(
             {
-                forgotPasswordRequest: false,
-                forgotPasswordFailed: false,
-                forgotPasswordSuccess: false,
-                resetPasswordRequest: false,
-                resetPasswordFailed: false,
+                ...initialState,
                 resetPasswordSuccess: true
             }
         )
@@ -103,12 +74,8 @@ describe('passwordReducer', () => {
             })
         ).toEqual(
             {
-                forgotPasswordRequest: false,
-                forgotPasswordFailed: false,
-                forgotPasswordSuccess: false,
-                resetPasswordRequest: false,
+                ...initialState,
                 resetPasswordFailed: true,
-                resetPasswordSuccess: false
             }
         )
     })

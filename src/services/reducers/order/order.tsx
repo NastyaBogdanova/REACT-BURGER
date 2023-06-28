@@ -1,4 +1,4 @@
-import { SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS, SEND_ORDER_FAILED, TOrderActions, TOrder } from "../../actions/order";
+import { SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS, SEND_ORDER_FAILED, SEND_ORDER_RESET, TOrderActions, TOrder } from "../../actions/order";
 
 type TOrderState = {
     request: boolean,
@@ -6,7 +6,7 @@ type TOrderState = {
     order: null | TOrder,
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
     request: false,
     failed: false,
     order: null
@@ -33,6 +33,13 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
                 ...state,
                 failed: true,
                 request: false
+            };
+        }
+        case SEND_ORDER_RESET: {
+            return {
+                request: false,
+                failed: false,
+                order: null
             };
         }
         default: {

@@ -1,16 +1,10 @@
-import { ingredientsReducer } from './ingredients';
+import { ingredientsReducer, initialState } from './ingredients';
 import * as actions from '../../actions/ingredients';
 import { firstIngredient, secondIngredient } from '../../../utils/test-data';
 
 describe('ingredientsReducer', () => {
     it('should return the initial state', () => {
-        expect(ingredientsReducer(undefined, {})).toEqual(
-            {
-                request: false,
-                failed: false,
-                ingredients: []
-            }
-        )
+        expect(ingredientsReducer(undefined, {})).toEqual(initialState);
     })
 
     it('should handle GET_INGREDIENTS_REQUEST', () => {
@@ -19,9 +13,8 @@ describe('ingredientsReducer', () => {
         })
         ).toEqual(
             {
+                ...initialState,
                 request: true,
-                failed: false,
-                ingredients: []
             }
         )
     })
@@ -33,8 +26,7 @@ describe('ingredientsReducer', () => {
         })
         ).toEqual(
             {
-                request: false,
-                failed: false,
+                ...initialState,
                 ingredients: [firstIngredient, secondIngredient]
             }
         )
@@ -47,9 +39,8 @@ describe('ingredientsReducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 failed: true,
-                request: false,
-                ingredients: []
             }
         )
     })

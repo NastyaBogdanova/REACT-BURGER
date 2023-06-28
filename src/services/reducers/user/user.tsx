@@ -24,7 +24,7 @@ type TUserState = {
     editUserSuccess: boolean,
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
     user: {
         "email": "",
         "name": "",

@@ -35,7 +35,7 @@ const OrderBox = () => {
     const submit = (): void => {
         if (loggedIn && stuffings && bun) {
             const ingredientsId = [bun, ...stuffings, bun].map(item => item._id);
-            dispatch(sendOrder(ingredientsId));
+            dispatch(sendOrder(ingredientsId))
             setModalOpen(true);
         } else {
             navigate("/login");

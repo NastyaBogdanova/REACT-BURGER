@@ -1,15 +1,10 @@
-import { wsReducerProfile } from './webSocketProfile';
+import { wsReducerProfile, initialState } from './webSocketProfile';
 import * as actions from '../../actions/webSocketProfile';
 import { testFeed, testMessage } from '../../../utils/test-data';
 
 describe('wsReducerProfile', () => {
     it('should return the initial state', () => {
-        expect(wsReducerProfile(undefined, {})).toEqual(
-            {
-                wsConnected: false,
-                ordersProfile: []
-            }
-        )
+        expect(wsReducerProfile(undefined, {})).toEqual(initialState)
     })
 
     it('should handle WS_CONNECTION_PROFILE_SUCCESS', () => {
@@ -18,8 +13,8 @@ describe('wsReducerProfile', () => {
         })
         ).toEqual(
             {
+                ...initialState,
                 wsConnected: true,
-                ordersProfile: []
             }
         )
     })
@@ -31,12 +26,7 @@ describe('wsReducerProfile', () => {
         }, {
             type: actions.WS_CONNECTION_PROFILE_CLOSED
         })
-        ).toEqual(
-            {
-                wsConnected: false,
-                ordersProfile: []
-            }
-        )
+        ).toEqual(initialState)
     })
 
     it('should handle WS_GET_PROFILE_MESSAGE', () => {
@@ -61,8 +51,7 @@ describe('wsReducerProfile', () => {
             })
         ).toEqual(
             {
-                wsConnected: false,
-                ordersProfile: [],
+                ...initialState,
                 error: "Ошибка 404"
             }
         )

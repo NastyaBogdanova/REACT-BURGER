@@ -1,17 +1,10 @@
-import { wsReducerFeed } from './webSocketFeed';
+import { wsReducerFeed, initialState } from './webSocketFeed';
 import * as actions from '../../actions/webSocketFeed';
 import { testFeed, testMessage } from '../../../utils/test-data';
 
 describe('wsReducerFeed', () => {
     it('should return the initial state', () => {
-        expect(wsReducerFeed(undefined, {})).toEqual(
-            {
-                wsConnected: false,
-                total: 0,
-                totalToday: 0,
-                orders: []
-            }
-        )
+        expect(wsReducerFeed(undefined, {})).toEqual(initialState)
     })
 
     it('should handle WS_CONNECTION_SUCCESS', () => {
@@ -20,10 +13,8 @@ describe('wsReducerFeed', () => {
         })
         ).toEqual(
             {
+                ...initialState,
                 wsConnected: true,
-                total: 0,
-                totalToday: 0,
-                orders: []
             }
         )
     })
@@ -37,14 +28,7 @@ describe('wsReducerFeed', () => {
         }, {
             type: actions.WS_CONNECTION_CLOSED
         })
-        ).toEqual(
-            {
-                wsConnected: false,
-                total: 0,
-                totalToday: 0,
-                orders: []
-            }
-        )
+        ).toEqual(initialState)
     })
 
     it('should handle WS_GET_MESSAGE', () => {
@@ -71,10 +55,7 @@ describe('wsReducerFeed', () => {
             })
         ).toEqual(
             {
-                wsConnected: false,
-                total: 0,
-                totalToday: 0,
-                orders: [],
+                ...initialState,
                 error: "Ошибка 404"
             }
         )

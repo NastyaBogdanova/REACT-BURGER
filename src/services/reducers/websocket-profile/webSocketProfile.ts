@@ -15,7 +15,7 @@ type TWSProfileState = {
     error?: Event;
 }
 
-const initialState: TWSProfileState = {
+export const initialState: TWSProfileState = {
     wsConnected: false,
     ordersProfile: []
 };

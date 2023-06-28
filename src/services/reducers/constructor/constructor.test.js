@@ -1,30 +1,25 @@
-import { constructorReducer } from './constructor';
+import { constructorReducer, initialState } from './constructor';
 import * as actions from '../../actions/constructor';
 import { bun, mainIngredient, sauceIngredient } from '../../../utils/test-data';
 
 describe('constructorReducer', () => {
     it('should return the initial state', () => {
-        expect(constructorReducer(undefined, {})).toEqual(
-            {
-                stuffings: [],
-                bun: null,
-            }
-        )
+        expect(constructorReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle ADD_INGREDIENT', () => {
         expect(
             constructorReducer({
+                ...initialState,
                 stuffings: [mainIngredient],
-                bun: null,
             }, {
                 type: actions.ADD_INGREDIENT,
                 item: sauceIngredient
             })
         ).toEqual(
             {
+                ...initialState,
                 stuffings: [mainIngredient, sauceIngredient],
-                bun: null,
             }
         )
     })
@@ -37,7 +32,7 @@ describe('constructorReducer', () => {
             })
         ).toEqual(
             {
-                stuffings: [],
+                ...initialState,
                 bun: bun,
             }
         )
@@ -46,16 +41,16 @@ describe('constructorReducer', () => {
     it('should handle DELETE_INGREDIENT', () => {
         expect(
             constructorReducer({
+                ...initialState,
                 stuffings: [mainIngredient, sauceIngredient],
-                bun: null,
             }, {
                 type: actions.DELETE_INGREDIENT,
                 id: "2",
             })
         ).toEqual(
             {
+                ...initialState,
                 stuffings: [sauceIngredient],
-                bun: null,
             }
         )
     })
@@ -68,27 +63,22 @@ describe('constructorReducer', () => {
             }, {
                 type: actions.RESET_INGREDIENTS
             })
-        ).toEqual(
-            {
-                stuffings: [],
-                bun: null,
-            }
-        )
+        ).toEqual(initialState)
     })
 
     it('should handle UPDATE_INGREDIENTS', () => {
         expect(
             constructorReducer({
+                ...initialState,
                 stuffings: [mainIngredient, sauceIngredient],
-                bun: null,
             }, {
                 type: actions.UPDATE_INGREDIENTS,
                 ingredients: [sauceIngredient, mainIngredient]
             })
         ).toEqual(
             {
+                ...initialState,
                 stuffings: [sauceIngredient, mainIngredient],
-                bun: null,
             }
         )
     })

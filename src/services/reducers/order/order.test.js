@@ -1,16 +1,10 @@
-import { orderReducer } from './order';
+import { orderReducer, initialState } from './order';
 import * as actions from '../../actions/order';
 import { testOrder } from '../../../utils/test-data';
 
 describe('orderReducer', () => {
     it('should return the initial state', () => {
-        expect(orderReducer(undefined, {})).toEqual(
-            {
-                request: false,
-                failed: false,
-                order: null
-            }
-        )
+        expect(orderReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle SEND_ORDER_REQUEST', () => {
@@ -19,9 +13,8 @@ describe('orderReducer', () => {
         })
         ).toEqual(
             {
-                request: true,
-                failed: false,
-                order: null
+                ...initialState,
+                request: true
             }
         )
     })
@@ -33,9 +26,8 @@ describe('orderReducer', () => {
         })
         ).toEqual(
             {
-                request: false,
-                failed: false,
-                order: testOrder,
+                ...initialState,
+                order: testOrder
             }
         )
     })
@@ -47,8 +39,23 @@ describe('orderReducer', () => {
             })
         ).toEqual(
             {
-                failed: true,
-                request: false,
+                ...initialState,
+                failed: true
+            }
+        )
+    })
+
+    it('should handle SEND_ORDER_RESET', () => {
+        expect(
+            orderReducer({
+                ...initialState,
+                order: testOrder
+            }, {
+                type: actions.SEND_ORDER_RESET,
+            })
+        ).toEqual(
+            {
+                ...initialState,
                 order: null
             }
         )

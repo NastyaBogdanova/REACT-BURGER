@@ -1,30 +1,10 @@
-import { userReducer } from './user';
+import { userReducer, initialState } from './user';
 import * as actions from '../../actions/user';
 import { testUser, testUserEdited } from '../../../utils/test-data';
 
 describe('userReducer', () => {
     it('should return the initial state', () => {
-        expect(userReducer(undefined, {})).toEqual(
-            {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
-            }
-        )
+        expect(userReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle REGISTER_USER_REQUEST', () => {
@@ -33,66 +13,26 @@ describe('userReducer', () => {
         })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
+                ...initialState,
                 registerRequest: true,
-                registerFailed: false,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
 
     it('should handle REGISTER_USER_SUCCESS', () => {
         expect(userReducer({
-            user: {
-                "email": "",
-                "name": "",
-            },
+            ...initialState,
             registerRequest: true,
-            registerFailed: false,
-            loggedIn: false,
-            loginRequest: false,
-            loginFailed: false,
-            logOutRequest: false,
-            logOutFailed: false,
-            getUserRequest: false,
-            getUserFailed: false,
-            getUserSuccess: false,
-            editUserRequest: false,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.REGISTER_USER_SUCCESS,
             data: testUser,
         })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
                 registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
@@ -100,45 +40,16 @@ describe('userReducer', () => {
     it('should handle REGISTER_USER_FAILED', () => {
         expect(
             userReducer({
-                user: {
-                    "email": "",
-                    "name": "",
-                },
+                ...initialState,
                 registerRequest: true,
-                registerFailed: false,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }, {
                 type: actions.REGISTER_USER_FAILED,
             })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
+                ...initialState,
                 registerRequest: false,
                 registerFailed: true,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
@@ -149,66 +60,26 @@ describe('userReducer', () => {
         })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
+                ...initialState,
                 loginRequest: true,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
 
     it('should handle LOGIN_USER_SUCCESS', () => {
         expect(userReducer({
-            user: {
-                "email": "",
-                "name": "",
-            },
-            registerRequest: false,
-            registerFailed: false,
-            loggedIn: false,
+            ...initialState,
             loginRequest: true,
-            loginFailed: false,
-            logOutRequest: false,
-            logOutFailed: false,
-            getUserRequest: false,
-            getUserFailed: false,
-            getUserSuccess: false,
-            editUserRequest: false,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.LOGIN_USER_SUCCESS,
             data: testUser,
         })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
                 registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
@@ -216,126 +87,52 @@ describe('userReducer', () => {
     it('should handle LOGIN_USER_FAILED', () => {
         expect(
             userReducer({
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
+                ...initialState,
                 loginRequest: true,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }, {
                 type: actions.LOGIN_USER_FAILED,
             })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
+                ...initialState,
                 loginRequest: false,
                 loginFailed: true,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
 
     it('should handle LOGOUT_USER_REQUEST', () => {
         expect(userReducer({
+            ...initialState,
             user: testUser,
-            registerRequest: false,
-            registerFailed: false,
             loggedIn: true,
-            loginRequest: false,
-            loginFailed: false,
-            logOutRequest: false,
-            logOutFailed: false,
-            getUserRequest: false,
-            getUserFailed: false,
-            getUserSuccess: false,
-            editUserRequest: false,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.LOGOUT_USER_REQUEST,
         })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
                 logOutRequest: true,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
 
     it('should handle LOGOUT_USER_SUCCESS', () => {
         expect(userReducer({
+            ...initialState,
             user: testUser,
-            registerRequest: false,
-            registerFailed: false,
             loggedIn: true,
-            loginRequest: false,
-            loginFailed: false,
             logOutRequest: true,
-            logOutFailed: false,
-            getUserRequest: false,
-            getUserFailed: false,
-            getUserSuccess: false,
-            editUserRequest: false,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.LOGOUT_USER_SUCCESS,
         })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
+                ...initialState,
                 loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
                 logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
@@ -343,39 +140,20 @@ describe('userReducer', () => {
     it('should handle LOGOUT_USER_FAILED', () => {
         expect(
             userReducer({
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
                 logOutRequest: true,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }, {
                 type: actions.LOGOUT_USER_FAILED,
             })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
                 loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
                 logOutFailed: true,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
@@ -386,66 +164,27 @@ describe('userReducer', () => {
         })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
+                ...initialState,
                 getUserRequest: true,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
 
     it('should handle GET_USER_SUCCESS', () => {
         expect(userReducer({
-            user: {
-                "email": "",
-                "name": "",
-            },
-            registerRequest: false,
-            registerFailed: false,
-            loggedIn: false,
-            loginRequest: false,
-            loginFailed: false,
-            logOutRequest: false,
-            logOutFailed: false,
+            ...initialState,
             getUserRequest: true,
-            getUserFailed: false,
-            getUserSuccess: false,
-            editUserRequest: false,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.GET_USER_SUCCESS,
             data: testUser,
         })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
                 getUserRequest: false,
-                getUserFailed: false,
                 getUserSuccess: true,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
@@ -453,123 +192,54 @@ describe('userReducer', () => {
     it('should handle GET_USER_FAILED', () => {
         expect(
             userReducer({
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
+                ...initialState,
                 getUserRequest: true,
-                getUserFailed: false,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }, {
                 type: actions.GET_USER_FAILED,
             })
         ).toEqual(
             {
-                user: {
-                    "email": "",
-                    "name": "",
-                },
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: false,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
+                ...initialState,
                 getUserRequest: false,
                 getUserFailed: true,
-                getUserSuccess: false,
-                editUserRequest: false,
-                editUserFailed: false,
-                editUserSuccess: false,
             }
         )
     })
 
     it('should handle EDIT_USER_REQUEST', () => {
         expect(userReducer({
+            ...initialState,
             user: testUser,
-            registerRequest: false,
-            registerFailed: false,
             loggedIn: true,
-            loginRequest: false,
-            loginFailed: false,
-            logOutRequest: false,
-            logOutFailed: false,
-            getUserRequest: false,
-            getUserFailed: false,
-            getUserSuccess: false,
-            editUserRequest: false,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.EDIT_USER_REQUEST,
         })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
-                loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
                 editUserRequest: true,
-                editUserFailed: false,
-                editUserSuccess: false,
+                loggedIn: true,
             }
         )
     })
 
     it('should handle EDIT_USER_SUCCESS', () => {
         expect(userReducer({
+            ...initialState,
             user: testUser,
-            registerRequest: false,
-            registerFailed: false,
             loggedIn: true,
-            loginRequest: false,
-            loginFailed: false,
-            logOutRequest: false,
-            logOutFailed: false,
-            getUserRequest: false,
-            getUserFailed: false,
-            getUserSuccess: false,
             editUserRequest: true,
-            editUserFailed: false,
-            editUserSuccess: false,
         }, {
             type: actions.EDIT_USER_SUCCESS,
             data: testUserEdited
         })
         ).toEqual(
             {
+                ...initialState,
                 user: testUserEdited,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
                 editUserRequest: false,
-                editUserFailed: false,
                 editUserSuccess: true,
             }
         )
@@ -578,41 +248,21 @@ describe('userReducer', () => {
     it('should handle EDIT_USER_FAILED', () => {
         expect(
             userReducer({
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
                 editUserRequest: true,
-                editUserFailed: false,
-                editUserSuccess: false,
             }, {
                 type: actions.EDIT_USER_FAILED,
             })
         ).toEqual(
             {
+                ...initialState,
                 user: testUser,
-                registerRequest: false,
-                registerFailed: false,
                 loggedIn: true,
-                loginRequest: false,
-                loginFailed: false,
-                logOutRequest: false,
-                logOutFailed: false,
-                getUserRequest: false,
-                getUserFailed: false,
-                getUserSuccess: false,
                 editUserRequest: false,
                 editUserFailed: true,
-                editUserSuccess: false,
             }
         )
     })
-
 }) 
