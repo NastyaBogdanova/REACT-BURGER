@@ -1,4 +1,4 @@
-import type { TOrder } from '../../utils/types';
+import type { TOrder } from '../../../utils/types';
 
 import {
     WS_CONNECTION_SUCCESS,
@@ -6,7 +6,7 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     TWSActions
-} from '../actions/webSocketFeed';
+} from '../../actions/webSocketFeed';
 
 type TWSState = {
     wsConnected: boolean;
@@ -17,7 +17,7 @@ type TWSState = {
     error?: Event;
 }
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
     wsConnected: false,
     total: 0,
     totalToday: 0,
@@ -51,6 +51,7 @@ export const wsReducerFeed = (state = initialState, action: TWSActions): TWSStat
             return {
                 ...state,
                 error: undefined,
+                wsConnected: true,
                 total: action.payload.total,
                 totalToday: action.payload.totalToday,
                 orders: action.payload.orders

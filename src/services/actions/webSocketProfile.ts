@@ -1,3 +1,5 @@
+import { TMessage } from "../../utils/types";
+
 export const WS_CONNECTION_PROFILE_START: 'WS_CONNECTION_PROFILE_START' = 'WS_CONNECTION_PROFILE_START';
 export const WS_CONNECTION_PROFILE_SUCCESS: 'WS_CONNECTION_PROFILE_SUCCESS' = 'WS_CONNECTION_PROFILE_SUCCESS';
 export const WS_CONNECTION_PROFILE_ERROR: 'WS_CONNECTION_PROFILE_ERROR' = 'WS_CONNECTION_PROFILE_ERROR';
@@ -21,7 +23,7 @@ type TWsConnectionProfileClosed = {
 }
 type TWsGetProfileMessage = {
     readonly type: typeof WS_GET_PROFILE_MESSAGE;
-    readonly payload: any
+    readonly payload: TMessage
 }
 type TWsSendProfileMessage = {
     readonly type: typeof WS_SEND_PROFILE_MESSAGE;
@@ -58,7 +60,7 @@ export const wsConnectionProfileClosed = () => {
         type: WS_CONNECTION_PROFILE_CLOSED,
     };
 };
-export const wsGetProfileMessage = (message: any) => {
+export const wsGetProfileMessage = (message: TMessage) => {
     return {
         type: WS_GET_PROFILE_MESSAGE,
         payload: message

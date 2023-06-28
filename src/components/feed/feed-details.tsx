@@ -4,6 +4,7 @@ import styles from "./feed.module.css";
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { TOrder, TIngredient, TOrders } from '../../utils/types';
 import { prettierDate, totalPrice, translateStatusText } from '../../utils/functions';
+import { Oval } from 'react-loader-spinner';
 
 export const FeedDetails = ({ orders }: TOrders) => {
 
@@ -16,7 +17,23 @@ export const FeedDetails = ({ orders }: TOrders) => {
     const orderIngredients: TIngredient[] = [];
 
     if (!order) {
-        return <h1 className="text text_type_main-medium mt-10">Идёт загрузка заказа...</h1>
+        return (
+            <div className={`${styles.loading} mt-10`}>
+                <h1 className="text text_type_main-medium mb-15">Идёт загрузка заказа...</h1>
+                <Oval
+                    height={50}
+                    width={50}
+                    color="#4c4cff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel='oval-loading'
+                    secondaryColor="#801ab3"
+                    strokeWidth={3}
+                    strokeWidthSecondary={3}
+                />
+            </div>
+        )
     }
 
     if (ingredients) {

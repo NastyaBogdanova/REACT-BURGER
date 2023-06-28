@@ -33,11 +33,13 @@ export const LoginPage = () => {
                         error={false}
                         errorText={'Ошибка'}
                         extraClass="mb-6"
+                        data-testid="email"
                     />
                     <PasswordInput
                         onChange={e => setPassword(e.target.value)}
                         value={password}
                         name={'password'}
+                        data-testid="password"
                     />
                     {loginFailed &&
                         <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка, попробуйте ещё раз.</span>

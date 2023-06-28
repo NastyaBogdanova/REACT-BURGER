@@ -1,5 +1,5 @@
 import { request, getNewToken } from "../../utils/api";
-import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
+import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
 import { AppThunk } from "../types/index";
 
 export const REGISTER_USER_REQUEST: 'REGISTER_USER_REQUEST' = 'REGISTER_USER_REQUEST';
@@ -324,8 +324,8 @@ export const logOutUser: AppThunk = () => {
             .then(res => {
                 if (res.success) {
                     dispatch(logoutUserSuccess());
-                    removeCookie('token', {});
-                    removeCookie('refreshToken', {});
+                    deleteCookie('token');
+                    deleteCookie('refreshToken');
                 } else {
                     dispatch(logoutUserFaild());
                 }

@@ -1,5 +1,5 @@
-import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, TIngredientsActions } from "../actions/ingredients";
-import { TIngredient } from "../../utils/types";
+import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, TIngredientsActions } from "../../actions/ingredients";
+import { TIngredient } from "../../../utils/types";
 
 type TIngredientsState = {
     request: boolean,
@@ -7,7 +7,7 @@ type TIngredientsState = {
     ingredients: ReadonlyArray<TIngredient>,
 }
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
     request: false,
     failed: false,
     ingredients: []

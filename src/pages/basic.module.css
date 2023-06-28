@@ -8,4 +8,10 @@
     column-gap: 48px;
     margin: auto;
 }
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
 

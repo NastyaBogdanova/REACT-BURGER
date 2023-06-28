@@ -2,7 +2,7 @@ import {
     FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILED,
     RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED,
     TPasswordActions
-} from "../actions/password";
+} from "../../actions/password";
 
 type TPasswordState = {
     forgotPasswordRequest: boolean,
@@ -13,7 +13,7 @@ type TPasswordState = {
     resetPasswordSuccess: boolean
 }
 
-const initialState: TPasswordState = {
+export const initialState: TPasswordState = {
     forgotPasswordRequest: false,
     forgotPasswordFailed: false,
     forgotPasswordSuccess: false,

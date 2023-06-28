@@ -1,6 +1,7 @@
 import styles from "./ingredient-details.module.css";
 import { useParams } from 'react-router-dom';
 import { useSelector } from "../../services/types/hooks";
+import { Oval } from 'react-loader-spinner';
 
 const IngredientDetails = () => {
     const { ingredients, request, failed } = useSelector(store => store.ingredients);
@@ -9,11 +10,27 @@ const IngredientDetails = () => {
     const ingredient = ingredients.find((item) => item._id === id);
 
     if (!ingredient && request) {
-        return <h1 className="text text_type_main-large m-25">Идёт загрузка ингридиента...</h1>
+        return (
+            <div className={`${styles.loading} mt-10`}>
+                <h1 className="text text_type_main-medium mb-15">Идёт загрузка ингредиента...</h1>
+                <Oval
+                    height={50}
+                    width={50}
+                    color="#4c4cff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel='oval-loading'
+                    secondaryColor="#801ab3"
+                    strokeWidth={3}
+                    strokeWidthSecondary={3}
+                />
+            </div>
+        )
     } else if (!ingredient && failed) {
-        return <h1 className="text text_type_main-large m-25">Произошла ошибка при загрузке ингридиента!</h1>
+        return <h1 className="text text_type_main-large m-25">Произошла ошибка при загрузке ингредиента!</h1>
     } else if (!ingredient) {
-        return <h1 className="text text_type_main-large m-25">Что-то пошло не так</h1>
+        return <h1 className="text text_type_main-large m-25">Что-то пошло не так!</h1>
     }
 
     return (

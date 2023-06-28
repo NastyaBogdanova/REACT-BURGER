@@ -1,6 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { getNewToken } from '../../utils/api';
-import { getCookie } from 'typescript-cookie';
+import { getCookie } from '../../utils/cookie';
 import { wsConnectionStart } from '../actions/webSocketFeed';
 
 import type {

@@ -35,7 +35,7 @@ const OrderBox = () => {
     const submit = (): void => {
         if (loggedIn && stuffings && bun) {
             const ingredientsId = [bun, ...stuffings, bun].map(item => item._id);
-            dispatch(sendOrder(ingredientsId));
+            dispatch(sendOrder(ingredientsId))
             setModalOpen(true);
         } else {
             navigate("/login");
@@ -46,7 +46,7 @@ const OrderBox = () => {
         <>
             <div className={`${styles.order} mt-10 mr-5`}>
                 <p className={`${styles.total} text text_type_digits-medium`}>{totalPrice}&nbsp;<CurrencyIcon type="primary" /></p>
-                <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={submit} disabled={!stuffings || !stuffings.length || !bun}>
+                <Button htmlType="button" type="primary" size="small" extraClass="ml-2 text_type_main-default" onClick={submit} disabled={!stuffings || !stuffings.length || !bun} data-testid="orderButton">
                     Оформить заказ
                 </Button>
                 {isModalOpen &&

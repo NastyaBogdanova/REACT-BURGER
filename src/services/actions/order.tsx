@@ -1,11 +1,12 @@
 import { request, getNewToken } from "../../utils/api";
 import { AppThunk } from "../types/index";
 import { TConstructorIngredient } from "../../utils/types";
-import { getCookie } from 'typescript-cookie';
+import { getCookie } from '../../utils/cookie';
 
 export const SEND_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
 export const SEND_ORDER_FAILED: 'SEND_ORDER_FAILED' = 'SEND_ORDER_FAILED';
+export const SEND_ORDER_RESET: 'SEND_ORDER_RESET' = 'SEND_ORDER_RESET';
 
 export type TOrder = {
     "name": string,
@@ -25,11 +26,15 @@ type TSendOrderSuccess = {
 type TSendOrderFaild = {
     readonly type: typeof SEND_ORDER_FAILED;
 }
+type TSendOrderReset = {
+    readonly type: typeof SEND_ORDER_RESET;
+}
 
 export type TOrderActions =
     | TSendOrderRequest
     | TSendOrderSuccess
-    | TSendOrderFaild;
+    | TSendOrderFaild
+    | TSendOrderReset;
 
 const sendOrderRequest = (): TSendOrderRequest => {
     return {
@@ -49,6 +54,11 @@ const sendOrderFaild = (): TSendOrderFaild => {
         type: SEND_ORDER_FAILED
     };
 };
+const sendOrderReset = (): TSendOrderReset => {
+    return {
+        type: SEND_ORDER_RESET
+    };
+};
 
 export const sendOrder: AppThunk = (ingredients: TConstructorIngredient[]) => {
     let authToken = getCookie('token');
@@ -61,6 +71,7 @@ export const sendOrder: AppThunk = (ingredients: TConstructorIngredient[]) => {
         body: JSON.stringify({ ingredients })
     }
     return function (dispatch) {
+        dispatch(sendOrderReset())
         dispatch(sendOrderRequest())
         request('orders', options)
             .then(res => {

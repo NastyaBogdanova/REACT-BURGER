@@ -31,3 +31,10 @@ export type TOrder = {
 export type TOrders = {
     orders: TOrder[],
 }
+
+export type TMessage = {
+    success: boolean,
+    orders: TOrder[],
+    total: number,
+    totalToday: number
+}

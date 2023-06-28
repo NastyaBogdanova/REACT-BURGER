@@ -3,7 +3,7 @@ import { FeedDetails } from '../components/feed/feed-details';
 import { wsConnectionProfileStart, wsConnectionProfileClosed } from "../services/actions/webSocketProfile";
 import { useSelector, useDispatch } from "../services/types/hooks";
 import { useEffect } from 'react';
-import { getCookie } from 'typescript-cookie';
+import { getCookie } from '../utils/cookie';
 
 export const OrderDetailsPage = () => {
 

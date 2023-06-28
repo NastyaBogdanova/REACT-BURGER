@@ -83,3 +83,9 @@
     position: relative;
     margin-left: -12px !important;
 }
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}

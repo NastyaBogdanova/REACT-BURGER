@@ -1,12 +1,29 @@
 import styles from "./order-details.module.css";
 import doneImagePath from '../../images/done.svg';
 import { useSelector } from '../../services/types/hooks';
+import { Oval } from 'react-loader-spinner';
 
 const OrderDetails = () => {
     const { order } = useSelector(store => store.order);
 
     if (!order) {
-        return <h3 className="text text_type_main-medium mb-15">Идёт загрузка заказа...</h3>
+        return (
+            <div className={`${styles.loading} mt-10`}>
+                <h1 className="text text_type_main-medium mb-15">Идёт загрузка заказа...</h1>
+                <Oval
+                    height={50}
+                    width={50}
+                    color="#4c4cff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel='oval-loading'
+                    secondaryColor="#801ab3"
+                    strokeWidth={3}
+                    strokeWidthSecondary={3}
+                />
+            </div>
+        )
     }
 
     return (
