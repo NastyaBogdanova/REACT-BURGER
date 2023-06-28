@@ -44,7 +44,7 @@ export const LoginPage = () => {
                     {loginFailed &&
                         <span className={`${styles.error} text text_type_main-small mt-2`}>Произошла ошибка, попробуйте ещё раз.</span>
                     }
-                    <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6" data-testid="authButton">
+                    <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">
                         Войти
                     </Button>
                 </form>
