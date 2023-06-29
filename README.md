@@ -1,18 +1,18 @@
-## Ссылка на github pages:
+## Link to github pages:
 https://nastyabogdanova.github.io/REACT-BURGER/ 
 
-## О проекте:
-Космическая бургерная, где можно собрать себе бургер по вкусу
+## About project:
+Space burger cafe, where you can create your own perfect burger
 
-## Основной функционал: 
-- Пользователь может собрать себе бургер, перетаскивая ингредиенты в контейнер
-- Пользователь может сделать заказ
-- Пользователь может зарегистрироваться/авторизоваться/восстановить пароль
-- Пользователь может наблюдать за всеми заказами в режиме реального времени 
-- Пользователь может просматривать свои заказы
-- Пользователь может редактировать свои данные в личном кабинете
+## Basic functionality: 
+- User can create burger with different ingredients by drag and drop
+- User can create an order
+- User can register/login/reset password
+- User can monitor all orders in real time
+- User can see all own orders in personal account
+- User can edit personal data in personal account
 
-## Стэк технологий:
+## Technology stack:
 React, Redux, Routing, TypeScript, WebSocket, Jest, Cypress
 
 ### `npm start`
