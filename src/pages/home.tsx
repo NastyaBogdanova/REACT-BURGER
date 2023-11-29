@@ -23,7 +23,7 @@ export const HomePage = () => {
     return (
         <div className={styles.app}>
             <DndProvider backend={HTML5Backend}>
-                <main className={styles.main}>
+                <main className={`${styles.main} p-4`}>
                     <div>
                         {failed &&
                             <h1 className="text text_type_main-medium m-25">Произошла ошибка при загрузке ингредиентов!</h1>
@@ -46,7 +46,7 @@ export const HomePage = () => {
                                 />
                             </div>
                         }
-                        {ingredients !== undefined &&
+                        {ingredients !== undefined && !failed &&
                             <BurgerIngredients />
                         }
                     </div>
